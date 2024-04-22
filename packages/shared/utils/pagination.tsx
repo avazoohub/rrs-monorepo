@@ -23,7 +23,7 @@ export const PaginatedList = ({ items, itemsPerPage }: any) => {
 
   // Handle item selection
   const selectItem = (item: any) => {
-    setAnswer({ answer: item });
+    setAnswer({ answer: item.displayName ?? item.name });
     setSelectedItem(item);
   };
 
@@ -34,7 +34,7 @@ export const PaginatedList = ({ items, itemsPerPage }: any) => {
         style={{ height: "25rem" }}
       >
         {currentItems.map((item, index) => (
-          <li key={index} className="block w-full">
+          <li key={index} className="block w-full py-4">
             <button
               onClick={() => selectItem(item)}
               className="w-full"
@@ -44,7 +44,7 @@ export const PaginatedList = ({ items, itemsPerPage }: any) => {
             >
               <div className="flex flex-col items-start w-full">
                 {answer?.questionNumber === 1 && (
-                  <div className="flex items-center justify-start space-x-4 cursor-pointer w-full">
+                  <div className="flex items-center justify-start space-x-4 text-left cursor-pointer w-full">
                     {/* <img
                       className="w-20 h-auto object-contain"
                       style={{ width: "5rem" }}
@@ -54,16 +54,17 @@ export const PaginatedList = ({ items, itemsPerPage }: any) => {
                     <div>
                       <p className="text-sm"> {item.fullName} </p>
                       <p className="text-xs font-light flex items-center space-x-2">
-                        <img
-                          src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/buf.png"
+                        {/* <img
+                          src={item.logo.href}
                           className="w-5 h-5 object-contain"
                           style={{ width: "1rem" }}
                           draggable={false}
-                        />
+                        /> */}
                         <span className="flex items-center justify-between space-x-1 font-light">
-                          <span>Buffalo Bills</span>
-                          <span>#17</span>
-                          <span>{item.position.name}</span>
+                          <span>Weight:</span>
+                          <span>{item.displayWeight}</span>
+                          <span>Height:</span>
+                          <span>{item.displayheight}</span>
                         </span>
                       </p>
                     </div>

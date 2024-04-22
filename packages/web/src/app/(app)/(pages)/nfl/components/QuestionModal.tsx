@@ -47,8 +47,6 @@ export default function QuestionModal({ refetch, answersRefetch, setOpenQuestion
         answer: null
       })
       setOpenQuestions(false)
-
-      // res.status === 201
       console.log(res)
 
     } catch (err) {

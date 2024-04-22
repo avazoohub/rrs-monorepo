@@ -49,7 +49,8 @@ export default function NFL() {
               </button>
             ))}
         </div>
-        {/* <div className="grid grid-cols-2 gap-4 mb-4">
+
+        <div className="grid grid-cols-2 gap-4 mb-4">
           {team &&
             team.data.rounds[tab].picks.map((pick: any, index: number) => {
               return (
@@ -62,14 +63,14 @@ export default function NFL() {
                 />
               )
             })}
-        </div> */}
+        </div> 
 
-        <div className="grid grid-cols-6 mb-4">
+        {/* <div className="grid grid-cols-6 mb-4">
           <small className="col-span-2 pl-14"> Team </small>
           <small className="col-span-2"> Pick </small>
           <small> School </small>
           <small> Position </small>
-        </div>
+        </div> */}
 
         {/* <div className="flex flex-col space-y-2">
           {team &&
@@ -88,7 +89,7 @@ export default function NFL() {
 
       </div>
 
-      <Modal setSelectedTeam={setSelectedTeam} teamAlias={selectedTeam} />
+      <Modal selectedTeam={selectedTeam} setSelectedTeam={setSelectedTeam} teamAlias={selectedTeam} />
     </>
   );
 }
