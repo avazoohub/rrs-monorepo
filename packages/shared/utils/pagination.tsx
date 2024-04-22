@@ -30,27 +30,28 @@ export const PaginatedList = ({ items, itemsPerPage }: any) => {
   return (
     <div>
       <ul
-        className="h-[25rem] flex flex-col overflow-y-auto mb-4"
-        style={{ height: "25rem" }}
+        className="h-[20rem] flex flex-col overflow-y-auto mb-4"
+        style={{ height: "20rem" }}
       >
         {currentItems.map((item, index) => (
-          <li key={index} className="block w-full py-4">
+          <li key={index} className="block w-full py-4" style={{ borderBottom: '0.1rem solid rgb(49, 46, 58)' }}>
             <button
               onClick={() => selectItem(item)}
               className="w-full"
               style={{
-                backgroundColor: item === selectedItem ? "#b01fcd" : "#1a1919",
+                backgroundColor: item === selectedItem ? "#cd00f7" : "",
+                padding: '0.7rem 1rem'
               }}
             >
               <div className="flex flex-col items-start w-full">
                 {answer?.questionNumber === 1 && (
                   <div className="flex items-center justify-start space-x-4 text-left cursor-pointer w-full">
-                    {/* <img
+                    <img
                       className="w-20 h-auto object-contain"
-                      style={{ width: "5rem" }}
-                      src="https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3918298.png&w=350&h=254"
+                      style={{ width: "3rem" }}
+                      src={item.logo.href}
                       draggable={false}
-                    /> */}
+                    />
                     <div>
                       <p className="text-sm"> {item.fullName} </p>
                       <p className="text-xs font-light flex items-center space-x-2">
@@ -60,11 +61,11 @@ export const PaginatedList = ({ items, itemsPerPage }: any) => {
                           style={{ width: "1rem" }}
                           draggable={false}
                         /> */}
-                        <span className="flex items-center justify-between space-x-1 font-light">
+                        <span className="flex items-center justify-between space-x-1 font-light opacity-50 mt-1">
                           <span>Weight:</span>
                           <span>{item.displayWeight}</span>
                           <span>Height:</span>
-                          <span>{item.displayheight}</span>
+                          <span>{item.displayHeight}</span>
                         </span>
                       </p>
                     </div>
@@ -130,7 +131,7 @@ const Pagination = ({ totalPages, currentPage, paginate }) => {
 
   return (
     <nav>
-      <ul className="flex items-center justify-center space-x-4 my-4">
+      <ul className="flex items-center justify-center space-x-4 my-4" style={{ padding: '0.5rem 0' }}>
         {finalPages.map((number, index) => (
           <li key={index} className="text-sm font-light">
             {number === "..." ? (

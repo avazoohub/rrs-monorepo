@@ -22,29 +22,13 @@ export default function Modal({ teamAlias, tab, selectedTeam, setSelectedTeam }:
   const [team, setTeam] = React.useState<any>(undefined);
   const [openQuetions, setOpenQuestions] = React.useState<boolean>(false);
 
+  const picks = NFLDraft.picks.filter((pick) => pick.teamId === teamAlias);
+  const teams = NFLDraft.teams.filter((team) => team.id === teamAlias);
 
-  React.useEffect(() => {
-    const filteredTeam = NFLTeamsData.filter(
-      (team) => team.team.id === teamAlias
-    );
-    setTeam({
-      logos: filteredTeam[0]?.team.logos[0].href, 
-      displayName: filteredTeam[0]?.team.displayName, 
-      record: filteredTeam[0]?.team.record
-    })
-  }, [teamAlias])
-
-
-
-  // const { } = team[0]?.team;
-
-  // const picks = NFLDraft.picks.filter((pick) => pick.teamId === teamId);
-
-  // const getPosition = (posId: any) => {
-  //   const pos = NFLDraft.positions.filter((pos) => pos.id === posId);
-  //   return pos[0]?.displayName;
-  // };
-
+  const getPosition = (posId: any) => {
+    const pos = NFLDraft.positions.filter((pos) => pos.id === posId);
+    return pos[0]?.abbreviation;
+  };
 
   const {
     data,
@@ -90,10 +74,23 @@ export default function Modal({ teamAlias, tab, selectedTeam, setSelectedTeam }:
     });
   };
 
+
+  React.useEffect(() => {
+    const filteredTeam = NFLTeamsData.filter(
+      (team) => team.team.id === teamAlias
+    );
+    setTeam({
+      logos: filteredTeam[0]?.team.logos[0].href, 
+      displayName: filteredTeam[0]?.team.displayName, 
+      record: filteredTeam[0]?.team.record
+    })
+  }, [teamAlias])
+
+
   return (
     <>
-      {/* <div className={`flex fixed inset-0 bg-black/40 backdrop-filter backdrop-blur-sm items-start justify-end transition delay-150 ${selectedTeam ? 'z-[10]' : 'z-[-1]'}`}> */}
         <div className={`fixed top-0 right-0 z-[10] bg-[#201d27] w-11/12 md:w-10/12 lg:w-[30rem] h-full overflow-hidden transition ${selectedTeam ? 'translate-x-0' : 'translate-x-[100%]'}`}>
+
           <div className="absolute inset-0 z-2 w-full h-full flex flex-col justify-start">
             {team && selectedTeam && (
               <>
@@ -109,31 +106,47 @@ export default function Modal({ teamAlias, tab, selectedTeam, setSelectedTeam }:
                   </p>
                   <div>
                     <div className="flex items-center space-x-2 text-sm font-light">
-                      <p className="flex items-center space-x-1">
-                        <span>Needs</span>
+                      <p className="font-medium">
+                          Needs &rarr;
                       </p>
-                      <div className="flex items-center space-x-1">
-                        <span className="text-xs flex items-center justify-center w-[2.2em] h-[2.2em] border border-gray-100 rounded-full">
-                          QB
+                      <div className="flex items-center space-x-2">
+                        {teams && teams[0].needs.map((need : any) => (
+                          <span className="text-xs font-medium flex items-center justify-center w-[2.2rem] h-[2.2rem] bg-white/10 rounded-full">
+                          {getPosition(need.positionId) ?? "--"}
                         </span>
-                        <span className="text-xs flex items-center justify-center w-[2.2em] h-[2.2em] border border-gray-100 rounded-full">
-                          QB
-                        </span>
-                        <span className="text-xs flex items-center justify-center w-[2.2em] h-[2.2em] border border-gray-100 rounded-full">
-                          QB
-                        </span>
-                        <span className="text-xs flex items-center justify-center w-[2.2em] h-[2.2em] border border-gray-100 rounded-full">
-                          QB
-                        </span>
+                      ))} 
                       </div>
                     </div>
-                    <p className="text-sm font-light mt-2">
-                     Home {team.record?.items[1].summary} (
-                      {team.record?.items[1].stats[3].value}) | Road:
-                      {team.record?.items[2].summary} ({team.record?.items[2].stats[3].value}){" "} 
+                    <p className="flex items-center space-x-2 divide-x divide-gray-100/20 text-sm font-medium mt-2 mb-3">
+                      <span> Home {team.record?.items[1].summary} <span className="text-green-600"> ({team.record?.items[1].stats[3].value}) </span> </span> 
+                      <span className="pl-2"> Road: {team.record?.items[2].summary} <span className="text-red-600"> ({team.record?.items[2].stats[3].value}) </span></span> 
                     </p>
+                    
+                    <p className="text-sm font-medium mb-3"> Round (Pick) </p>
+                    <div className="divide-y divide-[#34303e]">
+                    {picks.map((pick: any) => (
+                        <div
+                          key={pick.id}
+                          className={`grid grid-cols-4 py-1.5 w-full ${answer?.round === pick.round && answer?.pick === pick.pick && answer?.teamId === teamId && answer?.questionNumber === 1 ? "opacity-50 pointer-events-none cursor-not-allowed" : ""}`}
+                        >
+                          <p className="text-xs opacity-70">
+                            {pick.round} ({pick.pick})
+                          </p>
+                          <p className="font-light text-sm opacity-60">
+                            {pick.athlete?.displayName ?? "--"}{" "}
+                          </p>
+                          <p className="font-light text-sm opacity-30">
+                            {pick.athlete?.team.location ?? "--"}{" "}
+                          </p>
+                          <p className="font-light text-sm opacity-30">
+                            {getPosition(pick.athlete?.position.id) ?? "--"}{" "}
+                          </p>
+                        </div>
+                      ))}
+                      </div>
                   </div>
                 </div>
+
                 <div className="grid grid-cols-5 mt-2 px-8">
                   <small> Round </small>
                   <small className="col-span-3"> Question </small>
@@ -188,31 +201,11 @@ export default function Modal({ teamAlias, tab, selectedTeam, setSelectedTeam }:
             )}
           </div>
         </div>
-      {/* </div> */}
+        <div className={`flex fixed inset-0 bg-black/60 items-start justify-end  ${selectedTeam ? 'z-[9]' : 'z-[-1]'}`}>
+      </div>
 
-      {openQuetions && <QuestionModal refetch={refetch} answersRefetch={answersRefetch} setOpenQuestions={setOpenQuestions} />}
+     <QuestionModal refetch={refetch} answersRefetch={answersRefetch} openQuetions={openQuetions} setOpenQuestions={setOpenQuestions} />
     </>
   );
 }
 
-
-{/* {picks.map((pick) => (
-                <button
-                  key={pick.id}
-                  onClick={() => openQuestions(pick.round, pick.pick)}
-                  className={`grid grid-cols-4 w-full ${answer?.round === pick.round && answer?.pick === pick.pick && answer?.teamId === teamId && answer?.questionNumber === 1 ? "opacity-50 pointer-events-none cursor-not-allowed" : ""}`}
-                >
-                  <p>
-                    {pick.round}({pick.pick})
-                  </p>
-                  <p className="font-light text-sm opacity-60">
-                    {pick.athlete?.displayName ?? "--"}{" "}
-                  </p>
-                  <p className="font-light text-sm opacity-30">
-                    {pick.athlete?.team.location ?? "--"}{" "}
-                  </p>
-                  <p className="font-light text-sm opacity-30">
-                    {getPosition(pick.athlete?.position.id) ?? "--"}{" "}
-                  </p>
-                </button>
-              ))} */}

@@ -30,6 +30,7 @@ export default function AdminNFL() {
             const res = await saveConfig(
                 supabase,
                 configId,
+                round,
                 status
             );
             console.log(res)

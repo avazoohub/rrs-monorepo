@@ -3,10 +3,11 @@
 export async function saveConfig(
     client: any,
     configId: any,
+    round: number,
     status: boolean
 ) {
     return await client
         .from('config_nfl')
-        .upsert({ id: configId, status })
+        .upsert({ id: configId, round, status })
         .select()
 }

@@ -116,49 +116,7 @@ export const NFLDraft = {
             "round": 1,
             "traded": true,
             "tradeNote": "From CAR",
-            "teamId": "3",
-            "athlete": {
-                "id": "106308",
-                "displayName": "Bryce Young",
-                "displayWeight": "204 lbs",
-                "displayHeight": "5'10\"",
-                "position": {
-                    "id": "8"
-                },
-                "team": {
-                    "location": "Alabama",
-                    "name": "Crimson Tide",
-                    "abbreviation": "ALA",
-                    "shortDisplayName": "Alabama"
-                },
-                "attributes": [
-                    {
-                        "name": "rank",
-                        "displayName": "Rank",
-                        "abbreviation": "POS RK",
-                        "displayValue": "1"
-                    },
-                    {
-                        "name": "overall",
-                        "displayName": "Overall",
-                        "abbreviation": "OVR RK",
-                        "displayValue": "1"
-                    },
-                    {
-                        "name": "grade",
-                        "displayName": "Grade",
-                        "abbreviation": "GRADE",
-                        "displayValue": "96"
-                    }
-                ],
-                "guid": "975cc6da-01e5-3dcc-8a1a-1c9ecdb27d58",
-                "alternativeId": "4685720",
-                "headshot": {
-                    "href": "https://a.espncdn.com/i/headshots/college-football/players/full/4685720.png"
-                },
-                "proLink": "http://www.espn.com/nfl/player/_/id/4685720/bryce-young",
-                "uid": "s:20~l:28~a:4685720"
-            },
+            "teamId": "3"
         },
         {
             "status": "ON_THE_CLOCK",
