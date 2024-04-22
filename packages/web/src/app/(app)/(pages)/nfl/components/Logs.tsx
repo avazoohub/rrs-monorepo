@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
+import Link from 'next/link'
 
 import { useQuery } from "@supabase-cache-helpers/postgrest-react-query";
 import useSupabaseBrowser from "@/lib/supabase/utils/supabase-browser"
-
 import { getAnswers } from "@/utils/queries/questions";
 
 export default function Logs() {
@@ -15,12 +15,12 @@ export default function Logs() {
         error,
         isLoading,
         refetch,
-    } = useQuery(getAnswers(supabase));
+    } = useQuery(getAnswers(supabase), { enabled: true, refetchOnWindowFocus: true });
 
 
     return (
         <div className=" bg-[#110e19] p-6 rounded-lg">
-            <h5> Recent Answer Logs </h5>
+            <h5> Your recent answers </h5>
 
             {!data && error && !isLoading && (
                 <p className="my-12 text-center text-white">
@@ -45,14 +45,14 @@ export default function Logs() {
             <div className="flex flex-col space-y-3 mt-4 mb-3">
                 {Array.isArray(data) && !error && !isLoading && data.slice(0, 5).map((answer: any, index: number) => {
                     return (
-                        <p key={answer.id} className="font-light text-left text-sm opacity-40">
-                            {answer.answer.displayName ?? answer.answer.name} for round {answer.round}, pick {answer.pick}, question {answer.questionId}
+                        <p key={answer.id} className="font-light text-left text-sm ">
+                            <span className="">{answer.answer}</span> <span className="opacity-40">for round {answer.round}, pick {answer.pick}, question {answer.questionId}</span>
                         </p>
                     )
                 })}
             </div>
 
-            <button className="underline text-xs text-[#e91e63] font-light"> View answers  </button>
+            <Link href="/nfl/answers" className="underline text-xs text-[#e91e63] font-light"> View answers  </Link>
         </div>
     )
 }

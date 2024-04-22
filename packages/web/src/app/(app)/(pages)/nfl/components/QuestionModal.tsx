@@ -10,10 +10,11 @@ import { Questions } from "@/data/questions";
 
 import { PaginatedList } from "@/utils/pagination";
 import { answerStore } from "@/store/answerStore";
-import { saveAnswer } from "@/utils/queries/questions";
+import { saveUserAnswer } from "@/utils/queries/questions";
 
 export default function QuestionModal({ refetch, answersRefetch, openQuetions, setOpenQuestions }: any) {
   const supabase = useSupabaseBrowser();
+  const choices: any[] = [{name: 'Yes'},{name: 'No'}]
   const { answer, setAnswer, clearAnswer } = answerStore((state) => state);
 
   const paginationItems = () => {
@@ -24,6 +25,12 @@ export default function QuestionModal({ refetch, answersRefetch, openQuetions, s
       case 3: {
         return Colleges;
       }
+      case 4: {
+        return choices;
+      }
+      case 5: {
+        return choices;
+      }
       default: {
         return NFTAthletesData;
       }
@@ -32,7 +39,7 @@ export default function QuestionModal({ refetch, answersRefetch, openQuetions, s
 
   const handleSave = async () => {
     try {
-      const res = await saveAnswer(
+      const res = await saveUserAnswer(
         supabase,
         answer?.round,
         answer?.pick,
@@ -63,12 +70,11 @@ export default function QuestionModal({ refetch, answersRefetch, openQuetions, s
   }
 
   return (
-    // <div className={`flex fixed z-[11] inset-0 items-center justify-center`}>
       <div className={`fixed inset-0 z-[11] w-screen h-screen flex items-center justify-center overflow-hidden transition ${openQuetions ? 'translate-y-[0]' : 'translate-y-[150%]'}`}>
-        <div className="bg-[#201d27] w-11/12 md:w-10/12 lg:w-[30rem] h-auto flex flex-col justify-start mt-6 py-6  rounded-xl overflow-hidden">
-          <button onClick={() => handleClose()}> Close </button>
+        <div className="relative bg-[#201d27] w-11/12 md:w-10/12 lg:w-[30rem] h-auto flex flex-col justify-start mt-6 py-6  rounded-xl overflow-hidden">
+          <button onClick={() => handleClose()} className="absolute top-0 right-0 m-4 bg-white/5 w-11 h-11 rounded-full  hover:bg-[#282430] active:bg-[#1b1821] active:scale-[0.97] transition"> &#x2715; </button>
             {openQuetions && <>
-              <div className="px-10 w-full">
+              <div className="px-8 w-full">
                 {Questions.filter(
                   (question) => question.id === answer?.questionNumber,
                 ).map((question, index) => (
@@ -82,26 +88,27 @@ export default function QuestionModal({ refetch, answersRefetch, openQuetions, s
                     >
                       {question.question}
                     </p>
+                    {answer?.questionNumber && answer?.questionNumber < 4 && (
+                      <input
+                        type="text"
+                        className="text-white bg-[#26232d] py-2 px-4 rounded-lg mb-4 w-full"
+                        placeholder="Search..."
+                      />
+                    )}
                   </div>
                 ))}
-
-                <input
-                  type="text"
-                  className="text-white bg-white/5 p-2 rounded-lg mb-4 w-full"
-                  placeholder="Search player"
-                />
               </div>
+
               <PaginatedList
                 setAnswer={setAnswer}
                 items={paginationItems()}
                 itemsPerPage={10}
               />
-              <button onClick={() => handleSave()} className={`${!answer?.answer ? 'opacity-10 pointer-events-none text-white' : ''} block py-2 mt-2 mx-6 rounded-md bg-white text-black font-medium transition active:scale(0.95)`}>
+              <button onClick={() => handleSave()} className={`${!answer?.answer ? 'bg-white/10 pointer-events-none text-white' : 'bg-white text-black'} block py-2 mt-2 mx-6 rounded-lg font-medium active:scale-[0.98] transition`}>
                 Confirm
               </button>
             </>}
         </div>
-      {/* </div> */}
     </div>
   );
 }

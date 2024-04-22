@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@supabase-cache-helpers/postgrest-react-query": "^1.6.2",
+    "@supabase-cache-helpers/postgrest-swr": "^1.7.1",
     "@supabase/ssr": "^0.3.0",
     "@supabase/supabase-js": "^2.42.5",
     "@tanstack/react-query": "^5.29.2",

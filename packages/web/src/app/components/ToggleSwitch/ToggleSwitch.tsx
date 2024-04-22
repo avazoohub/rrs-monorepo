@@ -4,12 +4,13 @@ import React from "react";
 import style from "./ToggleSwitch.module.css";
 
 type Props = {
+	status: boolean,
 	label: string,
 	index: number,
 	onToggle: (enabled: boolean, index: number) => void
 }
 
-export default function ToggleSwitch({ label, index, onToggle }: Props) {
+export default function ToggleSwitch({ status, label, index, onToggle }: Props) {
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		onToggle(event.target.checked, index);
@@ -24,6 +25,7 @@ export default function ToggleSwitch({ label, index, onToggle }: Props) {
 					name={label}
 					id={label}
 					onChange={handleChange}
+					defaultChecked={status}
 				/>
 				<label className={`${style.label}`} htmlFor={label}>
 					<span className={`${style.inner}`} />

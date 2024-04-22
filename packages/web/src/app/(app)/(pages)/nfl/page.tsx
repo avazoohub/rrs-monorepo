@@ -4,6 +4,11 @@ import React from "react";
 import Link from "next/link";
 import { BiStopwatch } from "react-icons/bi";
 
+import { useQuery } from "@supabase-cache-helpers/postgrest-react-query";
+import useSupabaseBrowser from "@/lib/supabase/utils/supabase-browser"
+
+import { getAllAnswers } from "@/utils/queries/answers";
+
 import Team from "./components/Team";
 import Modal from "./components/Modal";
 
@@ -11,12 +16,24 @@ import { NFLDraft } from "@/data/nfl/draft";
 import { answerStore } from "@/store/answerStore";
 
 export default function NFL() {
-  const { answer } = answerStore((state) => state);
+  const supabase = useSupabaseBrowser();
 
   const [team, setTeam] = React.useState<any>(null);
   const [tab, setTab] = React.useState<number>(0);
   const [selectedTeam, setSelectedTeam] = React.useState<any>(undefined);
+  
+  const {
+    data: answers,
+    refetch: refetchConfig,
+  } = useQuery(getAllAnswers(supabase));
 
+  const isEnabled = (id: number) => {
+    if (answers && Array.isArray(answers)) {
+      const filteredAnswers = answers.filter((config: any) => config.id === id && config.round === tab + 1) 
+      return filteredAnswers[0] ? filteredAnswers[0].status : false
+    }
+   };
+ 
   const getPicks = async () => {
     try {
       const response = await fetch("/api/nfl/draft");
@@ -36,23 +53,25 @@ export default function NFL() {
       <div>
         <h4 className="font-medium text-lg mb-4"> NFL 2024 Draft </h4>
         <div className="grid grid-cols-7 my-10">
+
           {Array(NFLDraft.rounds)
             .fill(null)
             .map((_: any, index: any) => (
               <button
                 key={index}
                 onClick={() => setTab(index)}
-                className="block text-center text-white tracking-wider"
+                className={`block text-center text-white text-lg tracking-wider ${tab !== index ? 'opacity-50' : ''}`}
               >
-                <small className="block text-[0.65rem] font-light">Round</small>
+                <small className="block text-xs font-light">Round</small>
                 {index + 1}
               </button>
             ))}
         </div>
 
         <div className="grid grid-cols-2 gap-3 mb-4">
-          {team &&
+          {answers && team &&
             team.data.rounds[tab].picks.map((pick: any, index: number) => {
+              
               return (
                 <Team
                   key={index}
@@ -60,6 +79,8 @@ export default function NFL() {
                   pick={pick}
                   count={index}
                   tab={tab}
+                  enabled={isEnabled(index + 1)}
+                  refetchConfig={refetchConfig}
                 />
               )
             })}
