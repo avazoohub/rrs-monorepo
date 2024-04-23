@@ -1,0 +1,46 @@
+.wrapper {
+	background-image: url('/landing-bg.png');
+    background-position: center 105%;
+    background-size: 75rem;
+    background-repeat: no-repeat;
+
+	@apply h-screen w-full 
+}
+.wrapperContent {
+	@apply flex flex-col items-center justify-center max-w-[991px] w-full h-full lg:h-[80%] mx-auto w-full
+}
+.wrapperContent div {
+	@apply relative
+}
+.wrapperContent h1 {
+	@apply text-3xl lg:text-[2.6rem] text-center font-bold mb-6
+}
+.wrapperContent p {
+	@apply mb-3
+}
+.wrapperContent form {
+	@apply flex flex-col items-start justify-start space-y-2 w-full
+}
+.wrapperContent form > * {
+	@apply my-2
+}
+.wrapperContent > div:first-of-type {
+	@apply flex-1
+}
+.wrapperContent > div:last-of-type {
+	@apply w-7/12
+}
+
+
+
+@media screen and (max-height: 900px) {
+  .wrapper {
+      background-position: center 40rem !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+	.wrapper {
+	    background-size: 56rem;
+	}
+}

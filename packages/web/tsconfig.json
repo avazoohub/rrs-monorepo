@@ -41,13 +41,10 @@
       ],
       "@/utils/*": [
         "../shared/utils/*"
-      ]
-      // "@/lib/*": [
-      //   "./src/lib/*"
-      // ],
-      // "@/utils/*": [
-      //   "./src/utils/*"
-      // ]
+      ],
+      "@/types/*": [
+        "../shared/types/*"
+      ],
     }
   },
   "include": [
