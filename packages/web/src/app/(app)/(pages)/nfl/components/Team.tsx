@@ -45,7 +45,7 @@ export default function Team({ pick, count, tab, enabled, refetchConfig, setSele
       className={`grid grid-cols-6 items-center h-12 overflow-hidden bg-[#1a181f] ${!enabled ? 'opacity-40 pointer-events-none hover:cursor-not-allowed' : ''}`}
     >
       <div className="col-span-2 lg:col-span-3 flex items-center justify-even h-full">
-        <span className=" h-full w-10 bg-black flex items-center justify-center text-white text-sm rounded"
+        <span className=" h-full w-10 bg-black flex items-center justify-center text-white rounded"
           style={{ backgroundColor: `#${team[0]?.team.color}` }}
         >
           {count + 1}
@@ -59,13 +59,13 @@ export default function Team({ pick, count, tab, enabled, refetchConfig, setSele
           {team[0]?.team.location} {team[0]?.team.name}
         </p>
       </div>
-      <p className="font-light text-left text-sm opacity-60 lg:col-span-2">
+      <p className="font-light text-left opacity-60 lg:col-span-2">
         {pick.prospect?.name ?? "--"}
       </p>
-      <p className="font-light text-left text-sm opacity-30 lg:hidden">
+      <p className="font-light text-left opacity-30 lg:hidden">
         {pick.prospect?.team_name ?? "--"}
       </p>
-      <p className="font-light text-left text-sm opacity-30">
+      <p className="font-light text-left opacity-30">
         {pick.prospect?.position ?? "--"}
       </p>
     </button>
