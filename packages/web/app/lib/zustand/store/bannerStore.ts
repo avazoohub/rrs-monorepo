@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Banner } from '@/types'
+import { Banner } from '@/types/index'
 
 type BannerStore = {
     selectedBanner: Banner | null | undefined,
@@ -15,8 +15,8 @@ export const bannerStore = create<BannerStore>((set) => ({
     modal: false,
     successModal: false,
     setSelectedBanner: (selected: Banner) => set(() => ({
-        selectedBanner: selected   
+        selectedBanner: selected
     })),
-    showModal: (show: boolean) => set(() => ({modal: show})),
-    showSuccessModal: (show: boolean) => set(() => ({successModal: show}))
+    showModal: (show: boolean) => set(() => ({ modal: show })),
+    showSuccessModal: (show: boolean) => set(() => ({ successModal: show }))
 }));

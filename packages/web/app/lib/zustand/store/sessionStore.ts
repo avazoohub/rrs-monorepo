@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Session } from '@/types'
+import { Session } from '@/types/index'
 
 type SessionStore = {
     session: Session | undefined | null,
@@ -7,8 +7,8 @@ type SessionStore = {
 }
 
 export const sessionStore = create<SessionStore>((set) => ({
-   session: undefined,
-   setSession: (newSession: Session) => set(() => ({
-    session: newSession   
-   }))
+    session: undefined,
+    setSession: (newSession: Session) => set(() => ({
+        session: newSession
+    }))
 }));

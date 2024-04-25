@@ -1,10 +1,10 @@
 // @ts-nocheck
-import { User } from '@/types'
+import { User } from '@/types/index'
 
 export const generateLeaderboard = (data: any) => {
 	let arr: any = []
 
-    if(data) {
+	if (data) {
 		data.map(user => {
 			let userData = user
 			let userReferral = data.filter(fUser => fUser.referrer_code === user.referral_code)

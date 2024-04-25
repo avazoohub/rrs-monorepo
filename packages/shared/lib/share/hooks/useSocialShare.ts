@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, Banner } from '@/types';
+import { User, Banner } from '@/types/index';
 import { SOCIAL_PLATFORMS } from '@/lib/constants'
 import { authLinkedIn } from "@/lib/share/linkedin/authLinkedIn";
 import { useFacebook } from "@/lib/share/facebook/useFacebook";
@@ -26,7 +26,7 @@ export const useSocialShare = (user: User | null | undefined, banner: Banner | u
 
   React.useEffect(() => {
     const shareStatus: GenericPlatforms<AvailablePlatforms> = SOCIAL_PLATFORMS.reduce((acc, platform) => ({
-      ...acc, 
+      ...acc,
       [platform]: !canShare(platform),
     }), {});
 
@@ -42,18 +42,18 @@ export const useSocialShare = (user: User | null | undefined, banner: Banner | u
    */
   const canShare = (platform: string): boolean => {
     const now = Date.now();
-   
+
     if (banner && banner.shares) {
       const hasShare = banner.shares.filter((share) => share.social_media === platform && share.user_id === user?.id);
 
       if (hasShare.length > 0) {
         return !hasShare.some((share) => {
-            const shareDate = new Date(share.created_at);
-            const difference = Math.abs(shareDate.getTime() - now);
-          
-            // 24 hours in milliseconds
-            return difference < 86400000;
-          }
+          const shareDate = new Date(share.created_at);
+          const difference = Math.abs(shareDate.getTime() - now);
+
+          // 24 hours in milliseconds
+          return difference < 86400000;
+        }
         );
       }
     }
@@ -75,7 +75,7 @@ export const useSocialShare = (user: User | null | undefined, banner: Banner | u
             authLinkedIn()
             return;
           }
-        
+
           useLinkedIn(supabase, user).then(resolve).catch(reject);
           return;
 
@@ -86,9 +86,9 @@ export const useSocialShare = (user: User | null | undefined, banner: Banner | u
       }
 
       // If none of the if conditions match, resolve the promise without a value
-    resolve();
+      resolve();
     })
   };
-  
+
   return { canShare, share, hasShared };
 };

@@ -1,8 +1,8 @@
 import { create } from 'zustand'
-import { MatchIt, Game, AllDrawNumbers, BoardOrders, PickedNumbers, GameUser } from '@/types'
+import { MatchIt, Game, AllDrawNumbers, BoardOrders, PickedNumbers, GameUser } from '@/types/index'
 
 type MatchitStore = {
-    
+
     all_draw_numbers: AllDrawNumbers | undefined | null,
     board_orders: BoardOrders | undefined | null,
     game: Game | undefined | null,
@@ -28,10 +28,10 @@ export const matchitStore = create<MatchitStore>((set) => ({
     status: undefined,
 
     setAllDrawNumbers: (drawNumbers: AllDrawNumbers) => set(() => ({
-        all_draw_numbers: drawNumbers   
+        all_draw_numbers: drawNumbers
     })),
     setBoardOrders: (boardOrders: BoardOrders) => set(() => ({
-        board_orders: boardOrders   
+        board_orders: boardOrders
     })),
     setGame: (game: Game) => set(() => ({
         game
