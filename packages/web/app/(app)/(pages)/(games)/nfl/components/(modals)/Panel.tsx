@@ -57,7 +57,7 @@ export default function Panel({ teamAlias, tab, selectedTeam, setSelectedTeam }:
 
   return (
     <>
-      <div className={`fixed top-0 right-0 z-[10] bg-[#201d27] w-11/12 md:w-10/12 lg:w-[30rem] h-full overflow-hidden transition ${selectedTeam ? 'translate-x-0' : 'translate-x-[100%]'}`}>
+      <div className={`fixed bottom-0 md:bottom-auto md:top-0 left-0 md:left-auto right-0 z-[10] bg-[#201d27] w-full md:w-10/12 lg:w-[30rem] h-[80%] md:h-full rounded-t-2xl md:rounded-none overflow-hidden transition ${selectedTeam ? 'translate-y-0 md:translate-x-0' : 'translate-y-[100%] md:translate-x-[100%]'}`}>
         <div className="absolute inset-0 z-2 w-full h-full flex flex-col justify-start overflow-y-auto">
           {team && selectedTeam && (
             <>

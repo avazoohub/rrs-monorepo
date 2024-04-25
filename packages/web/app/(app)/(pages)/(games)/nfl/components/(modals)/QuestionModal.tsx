@@ -69,7 +69,7 @@ export default function QuestionModal({ refetch, answersRefetch, openQuetions, s
   }
 
   return (
-    <div className={`fixed inset-0 z-[11] w-screen h-screen flex items-center justify-center overflow-hidden transition ${openQuetions ? 'translate-y-[0]' : 'translate-y-[150%]'}`}>
+    <div className={`bg-black/60 fixed inset-0 z-[11] w-screen h-screen flex items-center justify-center overflow-hidden transition ${openQuetions ? 'translate-y-[0]' : 'translate-y-[150%]'}`}>
       <div className="relative bg-[#201d27] w-11/12 md:w-10/12 lg:w-[30rem] h-auto flex flex-col justify-start mt-6 py-6  rounded-xl overflow-hidden">
         <button onClick={() => handleClose()} className="absolute top-0 right-0 m-4 bg-white/5 w-11 h-11 rounded-full  hover:bg-[#282430] active:bg-[#1b1821] active:scale-[0.97] transition"> &#x2715; </button>
         {openQuetions && <>

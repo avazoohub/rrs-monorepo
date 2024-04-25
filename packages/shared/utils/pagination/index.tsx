@@ -34,13 +34,12 @@ export const PaginatedList = ({ items, itemsPerPage }: any) => {
                 style={{ height: "20rem" }}
             >
                 {currentItems.map((item: any, index: any) => (
-                    <li key={index} className="block w-full py-4" style={{ borderBottom: '0.1rem solid rgb(49, 46, 58)' }}>
+                    <li key={index} className="block w-full px-4 py-2" style={{ borderBottom: '0.1rem solid rgb(49, 46, 58)' }}>
                         <button
                             onClick={() => selectItem(item)}
                             className="w-full hover:bg-[#282430] active:bg-[#1b1821] active:scale-[0.97] transition"
                             style={{
                                 backgroundColor: item == selectedItem ? "#cd00f7" : "",
-                                padding: '0.7rem 1rem'
                             }}
                         >
                             <div className="flex flex-col items-start w-full">

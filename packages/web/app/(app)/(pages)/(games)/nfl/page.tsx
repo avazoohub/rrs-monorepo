@@ -83,21 +83,24 @@ export default function NFL() {
             <p className="font-light"> 2024 Draft </p>
           </div>
         </div>
-        <div className="grid grid-cols-7 mt-8">
-          {Array(NFLDraft.rounds)
-            .fill(null)
-            .map((_: any, index: any) => (
-              <button
-                key={index}
-                onClick={() => setTab(index)}
-                className={`block text-center text-white text-xl leading-tight tracking-wider border-b hover:opacity-100 pb-2 transition ${tab !== index ? 'opacity-30 border-transparent' : 'border-white'}`}
-              >
-                <small className="block text-xs font-light">Round</small>
-                {index + 1}
-              </button>
-            ))}
+        <div className="overflow-x-auto">
+          <div className="grid grid-cols-7 mt-8">
+            {Array(NFLDraft.rounds)
+              .fill(null)
+              .map((_: any, index: any) => (
+                <button
+                  key={index}
+                  onClick={() => setTab(index)}
+                  className={`block text-center text-white text-xl leading-tight tracking-wider border-b hover:opacity-100 pb-2 transition ${tab !== index ? 'opacity-30 border-transparent' : 'border-white'}`}
+                >
+                  <small className="block text-xs font-light">Round</small>
+                  {index + 1}
+                </button>
+              ))}
+          </div>
         </div>
       </div>
+
       <div className="grid md:grid-cols-2 gap-3 mb-4 p-2 md:p-4 min-h-[20vh] overflow-y-auto">
         {answers && team &&
           team.data.rounds[tab].picks.map((pick: any, index: number) => {
@@ -114,6 +117,7 @@ export default function NFL() {
             )
           })}
       </div>
+
 
       <Panel selectedTeam={selectedTeam} setSelectedTeam={setSelectedTeam} teamAlias={selectedTeam} />
       <ProfileQuestions metas={metas} refetchMetas={refetchMetas} />
