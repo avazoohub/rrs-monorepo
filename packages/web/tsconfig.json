@@ -24,17 +24,17 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
+      "@/app*": [
+        "./app/*"
       ],
-      "@/data": [
-        "./src/data"
+      "@/data/*": [
+        "./app/data/*"
       ],
-      "@/components": [
-        "./src/components"
+      "@/components/*": [
+        "./app/components/*"
       ],
       "@/store/*": [
-        "./src/lib/zustand/store/*"
+        "./app/lib/zustand/store/*"
       ],
       "@/lib/*": [
         "../shared/lib/*"
