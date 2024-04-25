@@ -26,8 +26,8 @@ export default function Login() {
 
   return (
     <div className="flex items-center justify-between w-screen h-screen">
-      <div className="w-6/12 h-full flex items-center justify-center">
-        <div className="text-center w-6/12 mx-auto">
+      <div className="w-6/12 h-full flex items-center justify-center fixed inset-0 z-10 p-6 w-full h-full">
+        <div className="text-center w-10/12 md:w-6/12 mx-auto p-6 rounded-lg">
           <Link href="/">
             <Image
               src="/temp-logo.svg"
@@ -41,13 +41,13 @@ export default function Login() {
           {state?.message && (
             <span>{state.message}</span>
           )}
-          <form action={formAction} className="flex flex-col mt-6">
+          <form action={formAction} className="flex flex-col space-y-2 mt-6">
             <input
               id="email"
               type="email"
               name="email"
               value="avazooaws@gmail.com"
-              className="text-black w-full bg-[#181322] rounded-lg h-[0] overflow-hidden"
+              className="text-black w-full bg-[#181322] rounded-lg text-white px-4 py-3"
               required
             />
             <input
@@ -55,10 +55,9 @@ export default function Login() {
               type="password"
               name="password"
               value="111222333"
-              className="text-black w-full bg-[#181322] rounded-lg h-[0] overflow-hidden"
+              className="text-black w-full bg-[#181322] rounded-lg text-white px-4 py-3"
               required
             />
-
             <SubmitButton />
           </form>
 
@@ -73,8 +72,8 @@ export default function Login() {
           </div> */}
         </div>
       </div>
-      <div className="w-full h-full flex items-center justify-center" style={{ backgroundImage: 'url()' }}>
-        <img src="https://static.clubs.nfl.com/image/private/t_editorial_landscape_12_desktop/bears/ualngvr4ggbznypjaz6f" alt="" className="rounded-2xl w-[80%] h-[80%] object-cover" />
+      <div className="w-full h-full flex items-center justify-center opacity-5">
+        <img src="https://static.clubs.nfl.com/image/private/t_editorial_landscape_12_desktop/bears/ualngvr4ggbznypjaz6f" alt="" className="rounded-2xl w-screen md:w-[80%] h-screen md:h-[80%] object-cover" />
       </div>
     </div>
   );

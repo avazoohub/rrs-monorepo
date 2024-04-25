@@ -1,4 +1,3 @@
-
 import { ReactNode } from "react";
 import { cookies } from "next/headers";
 
@@ -8,6 +7,7 @@ import { ReactQueryClientProvider } from "@/lib/react-query/ReactQueryClientProv
 import Answers from "./(games)/nfl/components/(sidebar)/Answers";
 import Points from "./(games)/nfl/components/(sidebar)/Points";
 import UserTeam from "./(games)/nfl/components/(sidebar)/Team";
+import Sidebar from "./components/Sidebar/Sidebar";
 
 export default async function Layout({
     children,
@@ -25,15 +25,8 @@ export default async function Layout({
         <>
             {session && (
                 <ReactQueryClientProvider>
-                    <main className="h-screen flex flex-col lg:flex-row items-start justify-between gap-4 p-4 transition max-w-[1500px] mx-auto pt-10 mb-20">
-                        <aside className="fixed inset-0 z-[-10] md:z-[1] w-[80%] md:static md:w-2/12 h-full overflow-y-auto py-6 px-2 rounded-2xl">
-                            <nav className="flex flex-col space-y-2 transition">
-                                <a href="/admin/nfl" className="hover:bg-[#e91e63] rounded-lg py-2 px-4 transition"> Admin </a>
-                                <a href="/home" className="hover:bg-[#e91e63] rounded-lg py-2 px-4 transition"> Home </a>
-                                <a href="/nfl" className="hover:bg-[#e91e63] rounded-lg py-2 px-4 transition"> NFL </a>
-                                <a href="/profile" className="hover:bg-[#e91e63] rounded-lg py-2 px-4 transition"> Profile </a>
-                            </nav>
-                        </aside>
+                    <main className="h-screen flex flex-col lg:flex-row items-start justify-between gap-4 p-4 transition max-w-[1500px] mx-auto pb-6 pt-20">
+                        <Sidebar />
                         <div className="flex-1 h-full">
                             {children}
                         </div>
