@@ -3,7 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import useSupabaseBrowser from "@/lib/supabase/utils/supabase-browser";
 import { userStore } from "@/store/userStore";
 import {
     watchUserLocation,
@@ -18,7 +18,7 @@ type Auth = {
 export default function Auth({ accessToken, children }: Auth) {
     const { user, setUser } = userStore((state) => state);
 
-    const supabase = createClientComponentClient();
+    const supabase = useSupabaseBrowser();
     const router = useRouter();
 
     React.useEffect(() => {
@@ -29,7 +29,7 @@ export default function Auth({ accessToken, children }: Auth) {
         // Supabase authentication state change listener.
         const {
             data: { subscription: authListener },
-        } = supabase.auth.onAuthStateChange((event, session) => {
+        } = supabase.auth.onAuthStateChange((event: any, session: any) => {
 
             if (session?.access_token !== accessToken) {
                 router.refresh();
@@ -83,7 +83,7 @@ export default function Auth({ accessToken, children }: Auth) {
             clearWatch(watchId);
         };
 
-    }, [accessToken, supabase, router]);
+    }, [accessToken, supabase, router, setUser]);
 
     return children;
 }

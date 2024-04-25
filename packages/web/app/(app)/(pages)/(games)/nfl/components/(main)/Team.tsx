@@ -1,3 +1,4 @@
+// @ts-nocheck 
 'use client'
 
 import React from "react";
@@ -11,6 +12,7 @@ import { realtimeStore } from "@/store/realtimeStore";
 export default function Team({ pick, count, tab, enabled, refetchAnswers, setSelectedTeam }: any) {
   const { update } = realtimeStore((state: any) => state);
   const { setAnswer } = answerStore((state: any) => state);
+
 
   const team = NFLTeams.sports[0].leagues[0].teams.filter(
     (team) =>
@@ -28,7 +30,7 @@ export default function Team({ pick, count, tab, enabled, refetchAnswers, setSel
 
   React.useEffect(() => {
     refetchAnswers()
-  }, [update])
+  }, [update, refetchAnswers])
 
   return (
     <button

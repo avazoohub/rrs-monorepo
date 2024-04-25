@@ -123,7 +123,7 @@ export default function Stats() {
                             //         <p className="text-center text-sm text-[#595760]">{team.bonus} bonus points</p>
                             //     </div>
                             // </div>
-                            <div className={`grid grid-cols-3 items-center h-12 overflow-hidden rounded-lg`}>
+                            <div key={team.id} className={`grid grid-cols-3 items-center h-12 overflow-hidden rounded-lg`}>
                                 <div className="col-span-2 flex items-center justify-even h-full">
                                     <div className="flex-1 flex items-center space-x-2">
                                         <img

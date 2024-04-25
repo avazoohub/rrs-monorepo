@@ -96,7 +96,7 @@ export default function AdminNFL() {
 
             <div className="grid grid-cols-7 gap-2 mt-8">
                 {Array(7).fill(null).map((_, index) => (
-                    <button className={`text-sm text-left font-light ${round === index + 1 ? '' : ' opacity-50'}`} onClick={() => {
+                    <button key={index} className={`text-sm text-left font-light ${round === index + 1 ? '' : ' opacity-50'}`} onClick={() => {
                         setRound(index + 1)
                         clearFields()
                     }}> Round {index + 1} </button>
