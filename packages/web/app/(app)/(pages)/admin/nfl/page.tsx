@@ -7,7 +7,7 @@ import { useQuery } from "@supabase-cache-helpers/postgrest-react-query";
 import useSupabaseBrowser from "@/lib/supabase/utils/supabase-browser"
 import { getAllAnswers, saveNFLAnswers } from "@/utils/queries/answers";
 
-import ToggleSwitch from "@/app/components/ToggleSwitch/ToggleSwitch"
+import ToggleSwitch from "../../components/ToggleSwitch/ToggleSwitch"
 
 interface FormState {
     q1: string;
