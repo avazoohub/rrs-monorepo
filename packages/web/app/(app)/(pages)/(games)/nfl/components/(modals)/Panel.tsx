@@ -57,8 +57,8 @@ export default function Panel({ teamAlias, tab, selectedTeam, setSelectedTeam }:
 
   return (
     <>
-      <div className={`fixed bottom-0 md:bottom-auto md:top-0 left-0 md:left-auto right-0 z-[10] bg-[#201d27] w-full md:w-10/12 lg:w-[30rem] h-[80%] md:h-full rounded-t-2xl md:rounded-none overflow-hidden transition ${selectedTeam ? 'translate-y-0 md:translate-x-0' : 'translate-y-[100%] md:translate-x-[100%]'}`}>
-        <div className="absolute inset-0 z-2 w-full h-full flex flex-col justify-start overflow-y-auto">
+      <div className={`fixed bottom-0 md:bottom-auto md:top-0 left-0 md:left-auto right-0 z-[10] bg-[#201d27] w-full md:w-10/12 lg:w-[30rem] h-[80%] md:h-full rounded-t-2xl md:rounded-none overflow-hidden transition ${selectedTeam ? 'translate-y-0 md:translate-x-0 md:translate-y-[0]' : 'translate-y-[100%] md:translate-x-[100%] md:translate-y-[0]'}`}>
+        < div className="absolute inset-0 z-2 w-full h-full flex flex-col justify-start overflow-y-auto">
           {team && selectedTeam && (
             <>
               <div className="px-10">
@@ -119,10 +119,10 @@ export default function Panel({ teamAlias, tab, selectedTeam, setSelectedTeam }:
 
               <hr className="border-0 border-b border-white/10 my-6" />
 
-              <div className="grid grid-cols-5 mt-2 px-8">
+              <div className="grid grid-cols-4 md:grid-cols-5 mt-2 px-8">
                 <p> No. </p>
                 <p className="col-span-3"> Question </p>
-                <p className="text-right"> Points </p>
+                <p className="hidden md:block text-right"> Points </p>
               </div>
               <div className="mt-2">
                 {!data && error && !isLoading && (
@@ -132,7 +132,7 @@ export default function Panel({ teamAlias, tab, selectedTeam, setSelectedTeam }:
                 )}
 
                 {!data && !error && isLoading && (
-                  <div className="animate-pulse flex flex-col space-y-2 py-2">
+                  <div className="animate-pulse flex flex-col space-y-2 py-2 mb-6">
                     {Array(3).fill(null).map((_, index) =>
                       <div key={index} className="flex items-center space-x-4">
                         <div className="bg-[#2f2f2f] rounded-lg h-12 w-12"></div>
@@ -153,7 +153,7 @@ export default function Panel({ teamAlias, tab, selectedTeam, setSelectedTeam }:
             </>
           )}
         </div>
-      </div>
+      </div >
       <div className={`flex fixed inset-0 bg-black/60 items-start justify-end transition ${selectedTeam ? 'z-[9] opacity-100' : 'z-[-1] opacity-0'}`}>
       </div>
 

@@ -30,11 +30,11 @@ export const PaginatedList = ({ items, itemsPerPage }: any) => {
     return (
         <div>
             <ul
-                className="h-[20rem] flex flex-col overflow-y-auto mb-4"
-                style={{ height: "20rem" }}
+                className="h-[15rem] md:h-[20rem] flex flex-col overflow-y-auto mb-4"
+                style={{ height: "15rem" }}
             >
                 {currentItems.map((item: any, index: any) => (
-                    <li key={index} className="block w-full px-4 py-2" style={{ borderBottom: '0.1rem solid rgb(49, 46, 58)' }}>
+                    <li key={index} className="block w-full" style={{ borderBottom: '0.1rem solid rgb(49, 46, 58)' }}>
                         <button
                             onClick={() => selectItem(item)}
                             className="w-full hover:bg-[#282430] active:bg-[#1b1821] active:scale-[0.97] transition"
@@ -44,7 +44,7 @@ export const PaginatedList = ({ items, itemsPerPage }: any) => {
                         >
                             <div className="flex flex-col items-start w-full">
                                 {answer?.questionNumber === 1 && (
-                                    <div className="flex items-center justify-start space-x-4 text-left cursor-pointer w-full">
+                                    <div className="flex items-center justify-start space-x-4 text-left cursor-pointer w-full px-4 py-2">
                                         <img
                                             className="w-20 h-auto object-contain"
                                             style={{ width: "3rem" }}
@@ -131,7 +131,7 @@ const Pagination = ({ totalPages, currentPage, paginate }: any) => {
                 <nav>
                     <ul className="flex items-center justify-center space-x-4 my-4" style={{ padding: '0.5rem 0' }}>
                         {finalPages.map((number: any, index: any) => (
-                            <li key={index} className="text-sm font-light">
+                            <li key={index} className="md:text-sm font-light">
                                 {number === "..." ? (
                                     <span className="opacity-30">{number}</span>
                                 ) : (

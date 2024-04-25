@@ -43,3 +43,64 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #fff;
 }
+
+
+.wrapper {
+  /* md:ml-[var(--sidebar-width)] */
+  /* @apply max-w-[1200px] md:mr-[8%] */
+  /* @apply flex-1 bg-white */
+}
+
+.container {
+  @apply bg-white rounded-2xl p-3 lg:p-2 w-full
+}
+
+/* APPS */
+.app {
+  @apply grayscale pointer-events-none text-center hover:font-medium hover:bg-gray-100/70 rounded-xl p-2 lg:p-4 active:scale-[0.98] active:bg-gray-200/50;
+}
+
+.appName {
+  @apply text-[.8rem] lg:text-sm
+}
+
+.appLabel {
+  @apply block text-[.8rem] lg:text-sm text-gray-600 font-light
+}
+
+.appIcon {
+  @apply block mx-auto
+}
+
+/* MESSAGE */
+.content {
+  @apply mt-4
+}
+
+.content>* {
+  @apply mb-4 leading-5 text-base lg:text-sm
+}
+
+.content p {
+  @apply text-base
+}
+
+.content h1 {
+  @apply text-base font-medium
+}
+
+/* MODAL */
+.modal {
+  animation: explode 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  /* transition: all 0.5s linear(0 0%, 0 1.8%, 0.01 3.6%, 0.03 6.35%, 0.07 9.1%, 0.13 11.4%, 0.19 13.4%, 0.27 15%, 0.34 16.1%, 0.54 18.35%, 0.66 20.6%, 0.72 22.4%, 0.77 24.6%, 0.81 27.3%, 0.85 30.4%, 0.88 35.1%, 0.92 40.6%, 0.94 47.2%, 0.96 55%, 0.98 64%, 0.99 74.4%, 1 86.4%, 1 100%); */
+}
+
+@keyframes explode {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}

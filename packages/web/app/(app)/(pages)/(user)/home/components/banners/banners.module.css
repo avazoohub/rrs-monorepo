@@ -1,0 +1,30 @@
+.items {
+    position: relative;
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    transition: all 0.2s;
+    transform: scale(0.98);
+    will-change: transform;
+    user-select: none;
+    cursor: pointer;
+
+    @apply rounded-lg lg:overflow-hidden
+}
+
+.item {
+    display: inline-block;
+
+    @apply bg-gray-100
+}
+
+.item>img {
+    @apply object-cover h-[170px] lg:h-[180px] w-[320px] lg:w-[360px]
+}
+
+.items:active {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+    transform: scale(1);
+}

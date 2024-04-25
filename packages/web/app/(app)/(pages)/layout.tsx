@@ -25,7 +25,7 @@ export default async function Layout({
         <>
             {session && (
                 <ReactQueryClientProvider>
-                    <main className="h-screen flex flex-col lg:flex-row items-start justify-between gap-4 p-4 transition max-w-[1500px] mx-auto pb-6 pt-20">
+                    <main className="h-screen flex flex-col lg:flex-row items-start justify-between gap-4 p-4 transition max-w-[1500px] mx-auto pb-6 pt-6">
                         <Sidebar />
                         <div className="flex-1 h-full">
                             {children}

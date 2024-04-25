@@ -26,8 +26,8 @@ export default function Login() {
 
   return (
     <div className="flex items-center justify-between w-screen h-screen">
-      <div className="w-6/12 h-full flex items-center justify-center fixed inset-0 z-10 p-6 w-full h-full">
-        <div className="text-center w-10/12 md:w-6/12 mx-auto p-6 rounded-lg">
+      <div className=" w-full h-full md:w-7/12 flex items-center justify-center fixed md:static inset-0 z-10 p-6 md:p-0">
+        <div className="text-center w-full md:w-6/12 mx-auto p-6 rounded-lg">
           <Link href="/">
             <Image
               src="/temp-logo.svg"
@@ -46,7 +46,7 @@ export default function Login() {
               id="email"
               type="email"
               name="email"
-              value="avazooaws@gmail.com"
+              placeholder="e.g. john@gmail.com"
               className="text-black w-full bg-[#181322] rounded-lg text-white px-4 py-3"
               required
             />
@@ -54,7 +54,7 @@ export default function Login() {
               id="password"
               type="password"
               name="password"
-              value="111222333"
+              placeholder="••••••••••••"
               className="text-black w-full bg-[#181322] rounded-lg text-white px-4 py-3"
               required
             />
@@ -72,8 +72,8 @@ export default function Login() {
           </div> */}
         </div>
       </div>
-      <div className="w-full h-full flex items-center justify-center opacity-5">
-        <img src="https://static.clubs.nfl.com/image/private/t_editorial_landscape_12_desktop/bears/ualngvr4ggbznypjaz6f" alt="" className="rounded-2xl w-screen md:w-[80%] h-screen md:h-[80%] object-cover" />
+      <div className="w-full h-full flex items-center justify-center opacity-5 md:opacity-100">
+        <img src="https://static.clubs.nfl.com/image/private/t_editorial_landscape_12_desktop/bears/ualngvr4ggbznypjaz6f" alt="" className="rounded-2xl w-screen md:w-[90%] h-screen md:h-[80%] object-cover" />
       </div>
     </div>
   );
