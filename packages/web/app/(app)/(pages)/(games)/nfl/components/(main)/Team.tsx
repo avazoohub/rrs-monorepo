@@ -30,14 +30,14 @@ export default function Team({ pick, count, tab, enabled, refetchAnswers, setSel
 
   React.useEffect(() => {
     refetchAnswers()
-  }, [update, refetchAnswers])
+  }, [update])
 
   return (
     <button
       onClick={() => handleTeamSelection(team[0]?.team.id)}
-      className={`grid grid-cols-6 items-center h-12 overflow-hidden bg-[#1a181f] rounded-lg ${!enabled ? 'opacity-40 pointer-events-none hover:cursor-not-allowed' : ''}`}
+      className={`grid grid-cols-4 md:grid-cols-6 items-center h-12 overflow-hidden bg-[#1a181f] rounded-lg ${!enabled ? 'opacity-40 pointer-events-none hover:cursor-not-allowed' : ''}`}
     >
-      <div className="col-span-2 lg:col-span-3 flex items-center justify-even h-full">
+      <div className="col-span-3 flex items-center justify-even h-full">
         <span className=" h-full w-10 bg-black flex items-center justify-center text-white rounded" style={{ backgroundColor: `#${team[0]?.team.color}` }}>
           {count + 1}
         </span>
@@ -55,10 +55,10 @@ export default function Team({ pick, count, tab, enabled, refetchAnswers, setSel
       <p className="font-light text-left opacity-60 lg:col-span-2">
         {pick.prospect?.name ?? "--"}
       </p>
-      <p className="font-light text-left opacity-30 lg:hidden">
+      {/* <p className="hidden font-light text-left opacity-30">
         {pick.prospect?.team_name ?? "--"}
-      </p>
-      <p className="font-light text-left opacity-30">
+      </p> */}
+      <p className="hidden md:block font-light text-left opacity-30">
         {pick.prospect?.position ?? "--"}
       </p>
     </button>

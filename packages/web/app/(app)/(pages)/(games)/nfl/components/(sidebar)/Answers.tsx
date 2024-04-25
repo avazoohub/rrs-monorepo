@@ -46,7 +46,7 @@ export default function Answers() {
                 {Array.isArray(data) && !error && !isLoading && data.slice(0, 5).map((answer: any, index: number) => {
                     return (
                         <p key={answer.id} className="font-light text-left">
-                            <span className="">{answer.answer}</span> <span className="opacity-40">for round {answer.round}, question {answer.questionId}</span>
+                            <span className="">{answer.answer}</span> <span className="text-[#645f6f] font-light">for round {answer.round}, question {answer.questionId}</span>
                         </p>
                     )
                 })}

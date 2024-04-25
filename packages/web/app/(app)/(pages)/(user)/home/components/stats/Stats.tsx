@@ -49,15 +49,15 @@ export default function Stats() {
     return (
         <>
             <div className="bg-[#110e19] rounded-2xl mb-6">
-                <div className="flex items-center justify-between px-8 py-8">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between space-y-6 md:space-y-0 px-8 py-8">
                     <div className="flex-1">
                         <div className="flex-1">
-                            <p className="text-[2.4rem] font-medium text-center">0</p>
+                            <p className="text-[2.4rem] font-medium md:text-center">0</p>
                             <small className="block text-[#8e869d] text-base text-center">Overall Points</small>
                         </div>
                     </div>
-                    <div className="w-8/12">
-                        <div className="grid grid-cols-3 gap-x-4 gap-y-10">
+                    <div className="w-full lg:w-8/12">
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-4 md:gap-y-10">
                             <div>
                                 <p className="text-2xl tracking-wider">0</p>
                                 <small className="block text-[#8e869d] text-sm">Personal points</small>
@@ -111,19 +111,12 @@ export default function Stats() {
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-2 gap-x-4">
+            <div className="grid md:grid-cols-2 gap-y-4 md:gap-y-0 gap-x-4">
                 <div className="bg-[#110e19] rounded-2xl">
                     <p className="mt-6 mb-2 px-6 text-[#8e869d]"> Recent NFL results </p>
                     <div className="grid grid-cols-1 gap-1 mb-4 px-4">
                         {results && results.results && results.results.slice(0, 5).map((team: any, index: number) => (
-                            // <div className="flex items-center space-x-2">
-                            //     <img src={getTeam(team.teamId)[0].team?.logos[0].href} alt="" className="w-12" />
-                            //     <div>
-                            //         <p className="text-center font-medium text-lg">{team.points} Points</p>
-                            //         <p className="text-center text-sm text-[#595760]">{team.bonus} bonus points</p>
-                            //     </div>
-                            // </div>
-                            <div key={team.id} className={`grid grid-cols-3 items-center h-12 overflow-hidden rounded-lg`}>
+                            <div key={team.id} className={`grid grid-cols-2 items-center h-12 overflow-hidden rounded-lg`}>
                                 <div className="col-span-2 flex items-center justify-even h-full">
                                     <div className="flex-1 flex items-center space-x-2">
                                         <img
@@ -133,12 +126,10 @@ export default function Stats() {
                                         />
                                         <p className="flex-1 text-left leading-tight">
                                             {getTeam(team.teamId)[0].team?.location} {getTeam(team.teamId)[0].team?.name}
+                                            <span className="block text-sm text-[#645f6f] font-light ">  You got {team.points} points ({team.bonus} bonus) </span>
                                         </p>
                                     </div>
                                 </div>
-                                <p className="font-light text-left text-[#8e869d]">
-                                    You got {team.points} points ({team.bonus} bonus)
-                                </p>
                             </div>
                         ))}
                     </div>
@@ -150,7 +141,7 @@ export default function Stats() {
                         {Array.isArray(data) && !error && !isLoading && data.slice(0, 5).map((answer: any, index: number) => {
                             return (
                                 <p key={answer.id} className="font-light text-left">
-                                    <span className="">{answer.answer}</span> <span className="opacity-40">for round {answer.round}, question {answer.questionId}</span>
+                                    <span className="">{answer.answer}</span> <span className="text-[#645f6f] font-light">for round {answer.round}, question {answer.questionId}</span>
                                 </p>
                             )
                         })}
