@@ -1,0 +1,25 @@
+.sidebar {
+    /* width: var(--sidebar-width); */
+    /* fixed left-0 top-0 z-[99]  */
+    @apply w-[20rem] h-auto lg:h-auto flex flex-col justify-start lg:justify-between bg-[#1d1d1d] lg:bg-transparent px-4 lg:px-8 py-1 lg:py-6;
+}
+
+.sidebar ul {
+    @apply grid grid-cols-5 lg:flex lg:flex-col
+}
+
+.sidebar_item {
+    @apply flex flex-col lg:flex-row items-center justify-center lg:justify-start text-[1.05rem] py-1 lg:py-2 px-3 my-[0.3rem] rounded-xl hover:bg-gray-100/50 active:bg-gray-200
+}
+
+.sidebar_item>span {
+    @apply text-[.7rem] lg:text-base font-normal;
+}
+
+.sidebar_item>svg {
+    @apply lg:mr-2 w-6 h-6 lg:w-5 lg:h-5
+}
+
+.sidebar_item.active {
+    @apply font-semibold
+}

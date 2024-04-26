@@ -7,6 +7,7 @@ import useSupabaseBrowser from "@/lib/supabase/utils/supabase-browser"
 
 import { getUserMeta } from "@/utils/queries/user";
 import { getAllAnswers } from "@/utils/queries/answers";
+import { getDrafts } from "@/utils/queries/nfl";
 import { NFLDraft } from "@/data/nfl/draft";
 
 import { realtimeStore } from "@/store/realtimeStore";
@@ -42,6 +43,10 @@ export default function NFL() {
   } = useQuery(getAllAnswers(supabase));
 
   const {
+    data: drafts
+  } = useQuery(getDrafts(supabase, tab + 1));
+
+  const {
     data: metas,
     refetch: refetchMetas,
   } = useQuery(getUserMeta(supabase));
@@ -54,24 +59,27 @@ export default function NFL() {
     }
   };
 
-  const getPicks = async () => {
-    try {
-      const response = await fetch("/api/nfl/draft");
-      const result = await response.json();
-      setTeam(result);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  // const getPicks = async () => {
+  //   try {
+  //     const response = await fetch("/api/nfl/draft", { cache: 'no-store' });
+  //     const result = await response.json();
+  //     setTeam(result);
 
-  const reload = () => {
-    refetchAnswers()
-    getPicks()
-  }
+  //     console.log(result)
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getPicks();
-  }, []);
+  // const reload = () => {
+  //   refetchAnswers()
+  //   getPicks()
+  // }
+
+  // React.useEffect(() => {
+  //   getPicks();
+  // }, []);
+
 
   return (
     <div className="bg-[#110e19] rounded-2xl">
@@ -100,6 +108,43 @@ export default function NFL() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-3 mb-4 p-2 md:p-4 min-h-[20vh] overflow-y-auto">
+        {Array.isArray(drafts) && drafts[0].teams.map((pick: any, index: number) => {
+          return <>
+            {pick.round === tab + 1 && (
+              <Team
+                key={index}
+                setSelectedTeam={setSelectedTeam}
+                pick={pick}
+                count={index}
+                tab={tab}
+                enabled={isEnabled(index + 1)}
+              />
+            )}
+          </>
+        })}
+      </div>
+
+      {/* 
+      <div className="grid md:grid-cols-2 gap-3 mb-4 p-2 md:p-4 min-h-[20vh] overflow-y-auto">
+        {answers && team &&
+          team.data.picks.map((pick: any, index: number) => {
+            return <>
+              {pick.round === tab + 1 && (
+                <Team
+                  key={index}
+                  setSelectedTeam={setSelectedTeam}
+                  pick={pick}
+                  count={index}
+                  tab={tab}
+                  enabled={isEnabled(index + 1)}
+                  refetchAnswers={reload}
+                />
+              )}
+            </>
+          })}
+      </div> */}
+
+      {/* <div className="grid md:grid-cols-2 gap-3 mb-4 p-2 md:p-4 min-h-[20vh] overflow-y-auto">
         {answers && team &&
           team.data.rounds[tab].picks.map((pick: any, index: number) => {
             return (
@@ -114,7 +159,7 @@ export default function NFL() {
               />
             )
           })}
-      </div>
+      </div> */}
 
 
       <Panel selectedTeam={selectedTeam} setSelectedTeam={setSelectedTeam} teamAlias={selectedTeam} />
