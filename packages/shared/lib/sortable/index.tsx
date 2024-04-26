@@ -20,11 +20,13 @@ export const SortableList = ({ items, saveTeam, setUpdateTeams }: any) => {
   const handleDragOver = (e, index) => {
     e.preventDefault();
     if (dragNode.current !== e.target && !dragNode.current.contains(e.target)) {
+      console.log(e.target);
       setDragOverIndex(index);
     }
   };
 
   const handleDragEnd = () => {
+    const teamId = parseInt(dragNode.current.dataset.teamId);
     const fromIndex = parseInt(dragNode.current.dataset.pickIndex);
     const toIndex = dragOverIndex;
 
@@ -48,14 +50,20 @@ export const SortableList = ({ items, saveTeam, setUpdateTeams }: any) => {
 
   const getTeam = (teamId: string) => {
     return NFLTeams.sports[0].leagues[0].teams.filter(
-      (team) => team.team.id === teamId,
+      (team) => team.team.id === teamId
     );
   };
 
   return (
     <div className="grid md:grid-cols-2 gap-3 mb-4 mt-6 min-h-[20vh] overflow-y-auto">
       {sortableItems.map((item, index) => {
-        const { logos, location, name } = getTeam(item.teamId)[0]?.team;
+        // Check if item is null or undefined before accessing properties
+        if (!item || !item.teamId) return null;
+
+        const teamData = getTeam(item.teamId)[0]?.team;
+        if (!teamData) return null; // Early return if no team data found
+
+        const { logos, location, name } = teamData;
 
         return (
           <Link
@@ -66,7 +74,7 @@ export const SortableList = ({ items, saveTeam, setUpdateTeams }: any) => {
                 pick: index + 1,
               },
             }}
-            className={`grid grid-cols-5 md:grid-cols-6 items-center h-12 overflow-hidden bg-[#1a181f] rounded-lg`}
+            className="grid grid-cols-5 md:grid-cols-6 items-center h-12 overflow-hidden bg-[#1a181f] rounded-lg"
             key={item.pick}
             draggable="true"
             data-pick-index={index}
@@ -78,7 +86,7 @@ export const SortableList = ({ items, saveTeam, setUpdateTeams }: any) => {
               <div className="flex-1 flex items-center space-x-2">
                 <img
                   src={logos[0].href}
-                  alt={name}
+                  alt={`${location} ${name}`}
                   className="block w-8 md:w-10 ml-3"
                 />
                 <p className="flex-1 text-left leading-tight truncate md:whitespace-pre-wrap">
