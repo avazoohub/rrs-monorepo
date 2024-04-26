@@ -3,7 +3,7 @@
 import React from "react";
 
 import { useQuery } from "@supabase-cache-helpers/postgrest-react-query";
-import useSupabaseBrowser from "@/lib/supabase/utils/supabase-browser"
+import useSupabaseBrowser from "@/lib/supabase/utils/supabase-browser";
 
 import { getUserMeta } from "@/utils/queries/user";
 import { getAllAnswers } from "@/utils/queries/answers";
@@ -24,56 +24,33 @@ export default function NFL() {
   const [tab, setTab] = React.useState<number>(0);
   const [selectedTeam, setSelectedTeam] = React.useState<any>(undefined);
 
-  supabase
-    .channel("table-db-changes")
-    .on(
-      "postgres_changes",
-      {
-        event: "*",
-        schema: "public",
-        table: "answers"
-      },
-      (payload: any) => setUpdate(true, payload),
-    )
-    .on(
-      'postgres_changes',
-      {
-        event: '*',
-        schema: 'public',
-        table: 'game_nfl',
-      },
-      (payload) => {
-        console.log(payload)
-        getPicks()
-      }
-    )
-    .subscribe();
+  const { data: answers, refetch: refetchAnswers } = useQuery(
+    getAllAnswers(supabase),
+    { enabled: true, refetchOnMount: true },
+  );
 
-  const {
-    data: answers,
-    refetch: refetchAnswers,
-  } = useQuery(getAllAnswers(supabase));
+  const { data: drafts, refetch: refecthDrafts } = useQuery(
+    getDrafts(supabase, tab + 1),
+    { enabled: true, refetchOnMount: true },
+  );
 
-  const {
-    data: drafts
-  } = useQuery(getDrafts(supabase, tab + 1));
-
-  const {
-    data: metas,
-    refetch: refetchMetas,
-  } = useQuery(getUserMeta(supabase));
+  const { data: metas, refetch: refetchMetas } = useQuery(
+    getUserMeta(supabase),
+  );
 
   const isEnabled = (pick: number) => {
     if (answers && Array.isArray(answers)) {
-      const roundData = `${tab + 1}_${pick}`
-      const filteredAnswers = answers.filter((answer: any) => answer.round === roundData)
-      return filteredAnswers[0] ? filteredAnswers[0].status : false
+      const roundData = `${tab + 1}_${pick}`;
+      const filteredAnswers = answers.filter(
+        (answer: any) => answer.round === roundData,
+      );
+      return filteredAnswers[0] ? filteredAnswers[0].status : false;
     }
   };
 
   const getPicks = async () => {
     try {
-      const response = await fetch("/api/nfl/draft", { cache: 'no-store' });
+      const response = await fetch("/api/nfl/draft", { cache: "no-store" });
       const result = await response.json();
       setTeam(result);
     } catch (err) {
@@ -90,12 +67,47 @@ export default function NFL() {
     getPicks();
   }, []);
 
+  supabase
+    .channel("answer_changes")
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "answers",
+      },
+      (payload: any) => {
+        setUpdate(true, payload);
+        refetchAnswers();
+        refecthDrafts();
+      },
+    )
+    .subscribe();
+
+  supabase
+    .channel("game_changes")
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "game_nfl",
+      },
+      (payload: any) => {
+        refetchAnswers();
+        refecthDrafts();
+      },
+    )
+    .subscribe();
 
   return (
     <div className="bg-[#110e19] rounded-2xl">
       <div className="border-b border-[#2d283c] mb-4">
         <div className="flex items-center justify-start space-x-4 px-6 pt-6">
-          <img src="https://content.sportslogos.net/leagues/thumbs/7.gif" className="w-16 h-16 bg-white rounded-full object-contain" />
+          <img
+            src="https://content.sportslogos.net/leagues/thumbs/7.gif"
+            className="w-16 h-16 bg-white rounded-full object-contain"
+          />
           <div>
             <h4 className="font-medium text-xl"> National Football League </h4>
             <p className="font-light"> 2024 Draft </p>
@@ -108,7 +120,7 @@ export default function NFL() {
               <button
                 key={index}
                 onClick={() => setTab(index)}
-                className={`block text-center text-white text-xl leading-tight tracking-wider border-b hover:opacity-100 pb-2 transition ${tab !== index ? 'opacity-30 border-transparent' : 'border-white'}`}
+                className={`block text-center text-white text-xl leading-tight tracking-wider border-b hover:opacity-100 pb-2 transition ${tab !== index ? "opacity-30 border-transparent" : "border-white"}`}
               >
                 <small className="block text-xs font-light">Round</small>
                 {index + 1}
@@ -118,22 +130,23 @@ export default function NFL() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-3 mb-4 p-2 md:p-4 min-h-[20vh] overflow-y-auto">
-        {Array.isArray(drafts) && drafts[0].teams.map((pick: any, index: number) => {
-          return <>
-            <Team
-              key={index}
-              setSelectedTeam={setSelectedTeam}
-              pick={pick}
-              count={index}
-              tab={tab}
-              espn={team}
-              enabled={isEnabled(index + 1)}
-            />
-          </>
-        })}
+        {Array.isArray(drafts) &&
+          drafts[0].teams.map((pick: any, index: number) => {
+            return (
+              <Team
+                key={index}
+                setSelectedTeam={setSelectedTeam}
+                pick={pick}
+                count={index}
+                tab={tab}
+                espn={team}
+                answers={answers}
+              />
+            );
+          })}
       </div>
 
-      {/* 
+      {/*
       <div className="grid md:grid-cols-2 gap-3 mb-4 p-2 md:p-4 min-h-[20vh] overflow-y-auto">
         {answers && team &&
           team.data.picks.map((pick: any, index: number) => {
@@ -170,8 +183,11 @@ export default function NFL() {
           })}
       </div> */}
 
-
-      <Panel selectedTeam={selectedTeam} setSelectedTeam={setSelectedTeam} teamAlias={selectedTeam} />
+      <Panel
+        selectedTeam={selectedTeam}
+        setSelectedTeam={setSelectedTeam}
+        teamAlias={selectedTeam}
+      />
       <ProfileQuestions metas={metas} refetchMetas={refetchMetas} />
     </div>
   );

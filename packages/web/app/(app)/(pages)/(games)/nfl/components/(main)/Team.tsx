@@ -1,7 +1,7 @@
-// @ts-nocheck 
-'use client'
+"use client";
 
 import React from "react";
+import { GiAmericanFootballHelmet } from "react-icons/gi";
 
 import { NFLDraft } from "@/data/nfl/draft";
 import { NFLTeams } from "@/data/nfl/teams";
@@ -9,7 +9,14 @@ import { NFLTeams } from "@/data/nfl/teams";
 import { answerStore } from "@/store/answerStore";
 import { realtimeStore } from "@/store/realtimeStore";
 
-export default function Team({ pick, count, tab, enabled, espn, setSelectedTeam }: any) {
+export default function Team({
+  pick,
+  count,
+  tab,
+  espn,
+  answers,
+  setSelectedTeam,
+}: any) {
   const { update } = realtimeStore((state: any) => state);
   const { setAnswer } = answerStore((state: any) => state);
 
@@ -20,7 +27,7 @@ export default function Team({ pick, count, tab, enabled, espn, setSelectedTeam 
   // );
 
   const team = NFLTeams.sports[0].leagues[0].teams.filter(
-    (team) => team.team.id === pick.teamId
+    (team) => team.team.id === pick.teamId,
   );
 
   const handleTeamSelection = (team: any) => {
@@ -29,21 +36,51 @@ export default function Team({ pick, count, tab, enabled, espn, setSelectedTeam 
       round: tab + 1,
       pick: count + 1,
     });
-  }; 1
+  };
 
-  // React.useEffect(() => {
-  //   refetchAnswers()
-  // }, [update])
+  const isEnabled = (pick: number, teamId: any) => {
+    if (answers && Array.isArray(answers)) {
+      const roundData = `${tab + 1}_${pick}_${teamId}`;
+      const filteredAnswers = answers.filter(
+        (answer: any) => answer.round === roundData,
+      );
+      return filteredAnswers[0] ? filteredAnswers[0].status : false;
+    }
+  };
 
-  const teamData = espn && espn.data.picks.filter(espn => espn.teamId === pick.teamId && espn.round === tab + 1 && espn.pick === count)
+  const teamData =
+    espn &&
+    espn.data.picks.filter(
+      (espn: any) => espn.teamId === pick.teamId && espn.round === tab + 1,
+    );
+
+  console.log(espn.data.picks);
+  console.log(pick.teamId, tab + 1, count);
+
+  const answerData =
+    answers &&
+    answers.filter((answer: any) => answer.round.split("_")[2] === pick.teamId);
+
+  const displayName =
+    teamData && teamData[0]?.athlete
+      ? teamData[0].athlete.displayName
+      : answerData && answerData[0]?.answer.q1;
+
+  const imageUrl =
+    teamData &&
+    teamData[0]?.athlete?.headshot?.href &&
+    teamData[0].athlete.headshot.href;
 
   return (
     <button
       onClick={() => handleTeamSelection(team[0]?.team.id)}
-      className={`grid grid-cols-5 md:grid-cols-6 items-center h-12 overflow-hidden bg-[#1a181f] rounded-lg ${!enabled ? 'opacity-40 pointer-events-none hover:cursor-not-allowed' : ''}`}
+      className={`grid grid-cols-5 md:grid-cols-6 items-center h-12 overflow-hidden bg-[#1a181f] rounded-lg ${!isEnabled(count + 1, pick.teamId) ? "opacity-40 pointer-events-none hover:cursor-not-allowed" : ""}`}
     >
       <div className="col-span-3 flex items-center justify-even h-full truncate">
-        <span className=" h-full w-10 bg-black flex items-center justify-center text-white rounded" style={{ backgroundColor: `#${team[0]?.team.color}` }}>
+        <span
+          className=" h-full w-10 bg-black flex items-center justify-center text-white rounded"
+          style={{ backgroundColor: `#${team[0]?.team.color}` }}
+        >
           {count + 1}
         </span>
         <div className="flex-1 flex items-center space-x-2">
@@ -58,15 +95,19 @@ export default function Team({ pick, count, tab, enabled, espn, setSelectedTeam 
         </div>
       </div>
       <p className="font-light text-left opacity-60 col-span-2 lg:col-span-3 flex items-center truncate">
-        <img
-          src={teamData && teamData[0]?.athlete?.headshot.href}
-          alt={teamData && teamData[0]?.athlete?.displayName}
-          className="block h-10 md:h-11 w-auto mr-1"
-        />
-        {teamData && teamData[0]?.athlete?.displayName ?? "--"}
+        {imageUrl ? (
+          <img
+            src={imageUrl}
+            alt={displayName}
+            className="block h-10 md:h-11 w-auto mr-1"
+          />
+        ) : (
+          <span className="inline-block w-[4rem] h-[1.2rem]"></span>
+        )}
+        {displayName ?? "--"}
       </p>
       <p className="hidden font-light text-left opacity-30 truncate">
-        {teamData && teamData[0]?.athlete?.team.shortDisplayName ?? "--"}
+        {(teamData && teamData[0]?.athlete?.team.shortDisplayName) ?? "--"}
       </p>
       {/* <p className="hidden md:block font-light text-left opacity-30">
         {teamData && teamData[0]?.athlete?.attributes[0].abbreviation ?? "--"}
