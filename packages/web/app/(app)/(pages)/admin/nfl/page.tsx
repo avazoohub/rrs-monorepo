@@ -76,7 +76,7 @@ export default function AdminNFL() {
             <button
               key={index}
               onClick={() => setRound(index + 1)}
-              className={`block text-center text-white text-xl leading-tight tracking-wider border-b hover:opacity-100 pb-2 transition ${round !== index ? "opacity-30 border-transparent" : "border-white"}`}
+              className={`block text-center text-white text-xl leading-tight tracking-wider border-b hover:opacity-100 pb-2 transition ${round !== index + 1 ? "opacity-30 border-transparent" : "border-white"}`}
             >
               <small className="block text-xs font-light">Round</small>
               {index + 1}
