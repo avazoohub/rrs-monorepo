@@ -9,10 +9,9 @@ import { NFLTeams } from "@/data/nfl/teams";
 import { answerStore } from "@/store/answerStore";
 import { realtimeStore } from "@/store/realtimeStore";
 
-export default function Team({ pick, count, tab, enabled, refetchAnswers, setSelectedTeam }: any) {
+export default function Team({ pick, count, tab, enabled, espn, setSelectedTeam }: any) {
   const { update } = realtimeStore((state: any) => state);
   const { setAnswer } = answerStore((state: any) => state);
-
 
   // const team = NFLTeams.sports[0].leagues[0].teams.filter(
   //   (team) =>
@@ -36,6 +35,8 @@ export default function Team({ pick, count, tab, enabled, refetchAnswers, setSel
   //   refetchAnswers()
   // }, [update])
 
+  const teamData = espn && espn.data.picks.filter(espn => espn.teamId === pick.teamId && espn.round === tab + 1 && espn.pick === count)
+
   return (
     <button
       onClick={() => handleTeamSelection(team[0]?.team.id)}
@@ -58,17 +59,17 @@ export default function Team({ pick, count, tab, enabled, refetchAnswers, setSel
       </div>
       <p className="font-light text-left opacity-60 col-span-2 lg:col-span-3 flex items-center truncate">
         <img
-          src={pick.athlete?.headshot.href}
-          alt={pick.athlete?.displayName}
+          src={teamData && teamData[0]?.athlete?.headshot.href}
+          alt={teamData && teamData[0]?.athlete?.displayName}
           className="block h-10 md:h-11 w-auto mr-1"
         />
-        {pick.athlete?.displayName ?? "--"}
+        {teamData && teamData[0]?.athlete?.displayName ?? "--"}
       </p>
       <p className="hidden font-light text-left opacity-30 truncate">
-        {pick.athlete?.team.shortDisplayName ?? "--"}
+        {teamData && teamData[0]?.athlete?.team.shortDisplayName ?? "--"}
       </p>
       {/* <p className="hidden md:block font-light text-left opacity-30">
-        {pick.athlete?.attributes[0].abbreviation ?? "--"}
+        {teamData && teamData[0]?.athlete?.attributes[0].abbreviation ?? "--"}
       </p> */}
     </button>
     // <button

@@ -66,7 +66,7 @@ export default function Panel({ teamAlias, tab, selectedTeam, setSelectedTeam }:
                 <img
                   src={team.logos}
                   alt=""
-                  className="w-[10rem] mx-auto mt-6"
+                  className="w-[8rem] md:w-[10rem] mx-auto mt-6"
                 />
                 <p className="text-2xl text-center font-medium mb-8">
                   {team.displayName}
@@ -78,7 +78,7 @@ export default function Panel({ teamAlias, tab, selectedTeam, setSelectedTeam }:
                     <p className="font-medium">
                       Needs &rarr;
                     </p>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-1 md:space-x-2">
                       {teams && teams[0].needs.map((need: any, index: number) => (
                         <span key={index} className={`text-sm font-light flex items-center justify-center w-[2.5rem] h-[2.5rem] rounded-full border border-[#18161d] ${need.isMet ? 'bg-white/60' : 'bg-[#2f2a3c]'}`}>
                           {getPosition(need.positionId) ?? "--"}
@@ -119,9 +119,9 @@ export default function Panel({ teamAlias, tab, selectedTeam, setSelectedTeam }:
 
               <hr className="border-0 border-b border-white/10 my-6" />
 
-              <div className="grid grid-cols-4 md:grid-cols-5 mt-2 px-8">
+              <div className="grid grid-cols-5 md:grid-cols-5 mt-2 px-8">
                 <p> No. </p>
-                <p className="col-span-3"> Question </p>
+                <p className="col-span-4"> Question </p>
                 <p className="hidden md:block text-right"> Points </p>
               </div>
               <div className="mt-2">

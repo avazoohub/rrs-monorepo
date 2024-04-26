@@ -27,7 +27,7 @@ export default async function Layout({
             {session && (
                 <ReactQueryClientProvider>
                     <Auth accessToken={session.access_token}>
-                        <main className="h-screen flex flex-col lg:flex-row items-start justify-between gap-4 p-4 transition max-w-[1500px] mx-auto pt-10 mb-20">
+                        <main className="h-screen flex flex-col lg:flex-row items-start justify-between gap-4 p-4 transition max-w-[1500px] mx-auto pt-6 md:pt-10 mb-20">
                             <Sidebar />
                             <div className="flex-1 h-full">
                                 {children}

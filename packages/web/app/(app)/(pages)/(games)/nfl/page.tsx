@@ -35,6 +35,18 @@ export default function NFL() {
       },
       (payload: any) => setUpdate(true, payload),
     )
+    .on(
+      'postgres_changes',
+      {
+        event: '*',
+        schema: 'public',
+        table: 'game_nfl',
+      },
+      (payload) => {
+        console.log(payload)
+        getPicks()
+      }
+    )
     .subscribe();
 
   const {
@@ -59,26 +71,24 @@ export default function NFL() {
     }
   };
 
-  // const getPicks = async () => {
-  //   try {
-  //     const response = await fetch("/api/nfl/draft", { cache: 'no-store' });
-  //     const result = await response.json();
-  //     setTeam(result);
-
-  //     console.log(result)
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
+  const getPicks = async () => {
+    try {
+      const response = await fetch("/api/nfl/draft", { cache: 'no-store' });
+      const result = await response.json();
+      setTeam(result);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   // const reload = () => {
   //   refetchAnswers()
   //   getPicks()
   // }
 
-  // React.useEffect(() => {
-  //   getPicks();
-  // }, []);
+  React.useEffect(() => {
+    getPicks();
+  }, []);
 
 
   return (
@@ -110,16 +120,15 @@ export default function NFL() {
       <div className="grid md:grid-cols-2 gap-3 mb-4 p-2 md:p-4 min-h-[20vh] overflow-y-auto">
         {Array.isArray(drafts) && drafts[0].teams.map((pick: any, index: number) => {
           return <>
-            {pick.round === tab + 1 && (
-              <Team
-                key={index}
-                setSelectedTeam={setSelectedTeam}
-                pick={pick}
-                count={index}
-                tab={tab}
-                enabled={isEnabled(index + 1)}
-              />
-            )}
+            <Team
+              key={index}
+              setSelectedTeam={setSelectedTeam}
+              pick={pick}
+              count={index}
+              tab={tab}
+              espn={team}
+              enabled={isEnabled(index + 1)}
+            />
           </>
         })}
       </div>
