@@ -54,9 +54,6 @@ export default function Team({
       (espn: any) => espn.teamId === pick.teamId && espn.round === tab + 1,
     );
 
-  console.log(espn.data.picks);
-  console.log(pick.teamId, tab + 1, count);
-
   const answerData =
     answers &&
     answers.filter((answer: any) => answer.round.split("_")[2] === pick.teamId);
