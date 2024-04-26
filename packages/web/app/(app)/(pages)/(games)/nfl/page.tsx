@@ -131,6 +131,7 @@ export default function NFL() {
 
       <div className="grid md:grid-cols-2 gap-3 mb-4 p-2 md:p-4 min-h-[20vh] overflow-y-auto">
         {Array.isArray(drafts) &&
+          drafts &&
           drafts[0].teams.map((pick: any, index: number) => {
             return (
               <Team

@@ -26,9 +26,11 @@ export default function Team({
   //     `{${pick.team.location} ${pick.team.name}}`,
   // );
 
-  const team = NFLTeams.sports[0].leagues[0].teams.filter(
-    (team) => team.team.id === pick.teamId,
-  );
+  const team =
+    pick &&
+    NFLTeams.sports[0].leagues[0].teams.filter(
+      (team) => team.team.id === pick.teamId,
+    );
 
   const handleTeamSelection = (team: any) => {
     setSelectedTeam(team);
@@ -49,12 +51,14 @@ export default function Team({
   };
 
   const teamData =
+    pick &&
     espn &&
     espn.data.picks.filter(
       (espn: any) => espn.teamId === pick.teamId && espn.round === tab + 1,
     );
 
   const answerData =
+    pick &&
     answers &&
     answers.filter((answer: any) => answer.round.split("_")[2] === pick.teamId);
 
@@ -69,46 +73,50 @@ export default function Team({
     teamData[0].athlete.headshot.href;
 
   return (
-    <button
-      onClick={() => handleTeamSelection(team[0]?.team.id)}
-      className={`grid grid-cols-5 md:grid-cols-6 items-center h-12 overflow-hidden bg-[#1a181f] rounded-lg ${!isEnabled(count + 1, pick.teamId) ? "opacity-40 pointer-events-none hover:cursor-not-allowed" : ""}`}
-    >
-      <div className="col-span-3 flex items-center justify-even h-full truncate">
-        <span
-          className=" h-full w-10 bg-black flex items-center justify-center text-white rounded"
-          style={{ backgroundColor: `#${team[0]?.team.color}` }}
+    <>
+      {pick && (
+        <button
+          onClick={() => handleTeamSelection(team[0]?.team.id)}
+          className={`grid grid-cols-5 md:grid-cols-6 items-center h-12 overflow-hidden bg-[#1a181f] rounded-lg ${!isEnabled(count + 1, pick.teamId) ? "opacity-40 pointer-events-none hover:cursor-not-allowed" : ""}`}
         >
-          {count + 1}
-        </span>
-        <div className="flex-1 flex items-center space-x-2">
-          <img
-            src={team[0]?.team.logos[0].href}
-            alt={team[0]?.team.name}
-            className="block w-8 md:w-10 ml-3"
-          />
-          <p className="flex-1 text-left leading-tight truncate md:whitespace-pre-wrap">
-            {team[0]?.team.location} {team[0]?.team.name}
+          <div className="col-span-3 flex items-center justify-even h-full truncate">
+            <span
+              className=" h-full w-10 bg-black flex items-center justify-center text-white rounded"
+              style={{ backgroundColor: `#${team[0]?.team.color}` }}
+            >
+              {count + 1}
+            </span>
+            <div className="flex-1 flex items-center space-x-2">
+              <img
+                src={team[0]?.team.logos[0].href}
+                alt={team[0]?.team.name}
+                className="block w-8 md:w-10 ml-3"
+              />
+              <p className="flex-1 text-left leading-tight truncate md:whitespace-pre-wrap">
+                {team[0]?.team.location} {team[0]?.team.name}
+              </p>
+            </div>
+          </div>
+          <p className="font-light text-left opacity-60 col-span-2 lg:col-span-3 flex items-center truncate">
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={displayName}
+                className="block h-10 md:h-11 w-auto mr-1"
+              />
+            ) : (
+              <span className="inline-block w-[4rem] h-[1.2rem]"></span>
+            )}
+            {displayName ?? "--"}
           </p>
-        </div>
-      </div>
-      <p className="font-light text-left opacity-60 col-span-2 lg:col-span-3 flex items-center truncate">
-        {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt={displayName}
-            className="block h-10 md:h-11 w-auto mr-1"
-          />
-        ) : (
-          <span className="inline-block w-[4rem] h-[1.2rem]"></span>
-        )}
-        {displayName ?? "--"}
-      </p>
-      <p className="hidden font-light text-left opacity-30 truncate">
-        {(teamData && teamData[0]?.athlete?.team.shortDisplayName) ?? "--"}
-      </p>
-      {/* <p className="hidden md:block font-light text-left opacity-30">
+          <p className="hidden font-light text-left opacity-30 truncate">
+            {(teamData && teamData[0]?.athlete?.team.shortDisplayName) ?? "--"}
+          </p>
+          {/* <p className="hidden md:block font-light text-left opacity-30">
         {teamData && teamData[0]?.athlete?.attributes[0].abbreviation ?? "--"}
       </p> */}
-    </button>
+        </button>
+      )}
+    </>
   );
 }
