@@ -11,8 +11,8 @@ interface Answer {
 export async function saveNFLAnswers(
     client: any,
     round: string,
-    status: boolean,
-    answer: Answer
+    answer: Answer,
+    status?: boolean
 ) {
     return await client
         .from('answers')
