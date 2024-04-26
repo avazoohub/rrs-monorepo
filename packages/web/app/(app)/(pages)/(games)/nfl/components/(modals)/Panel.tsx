@@ -186,6 +186,7 @@ export default function Panel({
                         index={index}
                         question={question}
                         answers={answers}
+                        teamId={teamAlias}
                         setOpenQuestions={setOpenQuestions}
                       />
                     );

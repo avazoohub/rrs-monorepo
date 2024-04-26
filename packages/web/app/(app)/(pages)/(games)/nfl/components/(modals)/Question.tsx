@@ -6,13 +6,14 @@ export default function Questions({
   index,
   question,
   answers,
+  teamId,
   setOpenQuestions,
 }: any) {
   const { answer, setAnswer } = answerStore((state) => state);
 
   const hasAnswers = (round: any, pick: any, questionNumber: any) => {
     if (Array.isArray(answers)) {
-      const roundData = `${round}_${pick}`;
+      const roundData = `${round}_${pick}_${teamId}`;
 
       return answers.some(
         (answer: { round: string; pick: number; questionId: number }) =>
@@ -24,7 +25,7 @@ export default function Questions({
 
   const getAnswers = (round: any, pick: any, questionNumber: any) => {
     if (Array.isArray(answers)) {
-      const roundData = `${round}_${pick}`;
+      const roundData = `${round}_${pick}_${teamId}`;
       const ans = answers.filter(
         (answer: { round: string; pick: number; questionId: number }) =>
           answer.round === roundData && answer.questionId === questionNumber,
@@ -38,6 +39,7 @@ export default function Questions({
     setOpenQuestions(true);
     setAnswer({
       questionNumber,
+      teamId,
     });
   };
 

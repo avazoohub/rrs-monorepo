@@ -4,6 +4,7 @@ type Answer = {
   round?: number | undefined | null;
   pick?: number | undefined | null;
   questionNumber?: number | undefined | null;
+  teamId?: string | number | undefined | null;
   answer?: string | number | undefined | null;
 };
 
@@ -24,6 +25,6 @@ export const answerStore = create<AnswerStore>((set) => ({
     })),
   clearAnswer: () =>
     set(() => ({
-      answer: null
-    }))
+      answer: null,
+    })),
 }));

@@ -43,7 +43,9 @@ export default function AdminNFL({
   const [status, setStatus] = React.useState<boolean>(false);
   const [formState, setFormState] = React.useState<FormState>(initialState);
 
-  const { data: answers } = useQuery(getAllAnswers(supabase));
+  const { data: answers } = useQuery(getAllAnswers(supabase), {
+    enabled: true,
+  });
 
   const getTeam = NFLTeams.sports[0].leagues[0].teams.filter(
     (team) => team.team.id === teamId,
@@ -51,7 +53,7 @@ export default function AdminNFL({
 
   const getAnswer = (key: string) => {
     if (Array.isArray(answers)) {
-      const roundData = `${round}_${pick}`;
+      const roundData = `${round}_${pick}_${teamId}`;
       const ans = answers.filter((answer) => answer.round === roundData);
       const obj = ans[0]?.answer;
 
@@ -64,7 +66,7 @@ export default function AdminNFL({
 
   const getStatus = () => {
     if (Array.isArray(answers)) {
-      const roundData = `${round}_${pick}`;
+      const roundData = `${round}_${pick}_${teamId}`;
       const ans = answers.some((answer) => answer.round === roundData);
       return ans;
     }
