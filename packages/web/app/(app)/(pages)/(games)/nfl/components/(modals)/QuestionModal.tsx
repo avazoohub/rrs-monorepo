@@ -10,6 +10,7 @@ import { Questions } from "@/data/questions";
 
 import { PaginatedList } from "@/utils/pagination";
 import { answerStore } from "@/store/answerStore";
+import { userStore } from "@/store/userStore";
 import { saveUserAnswer } from "@/utils/queries/questions";
 
 export default function QuestionModal({
@@ -21,6 +22,7 @@ export default function QuestionModal({
   const supabase = useSupabaseBrowser();
   const choices: any[] = [{ name: "Yes" }, { name: "No" }];
   const { answer, setAnswer, clearAnswer } = answerStore((state) => state);
+  const { user } = userStore((state) => state);
 
   const paginationItems = () => {
     switch (answer?.questionNumber) {
@@ -47,6 +49,7 @@ export default function QuestionModal({
     try {
       const res = await saveUserAnswer(
         supabase,
+        user?.id,
         round,
         answer?.questionNumber,
         answer?.answer,
@@ -74,7 +77,9 @@ export default function QuestionModal({
 
   return (
     <div
-      className={`bg-black/60 fixed inset-0 z-[11] w-screen h-screen flex items-center justify-center overflow-hidden transition ${openQuetions ? "translate-y-[0]" : "translate-y-[150%]"}`}
+      className={`bg-black/60 fixed inset-0 z-[11] w-screen h-screen flex items-center justify-center overflow-hidden transition ${
+        openQuetions ? "translate-y-[0]" : "translate-y-[150%]"
+      }`}
     >
       <div className="relative bg-[#201d27] w-11/12 md:w-10/12 lg:w-[30rem] h-auto flex flex-col justify-start mt-6 py-6  rounded-xl overflow-hidden">
         <button
@@ -116,9 +121,14 @@ export default function QuestionModal({
               items={paginationItems()}
               itemsPerPage={10}
             />
+
             <button
               onClick={() => handleSave()}
-              className={`${!answer?.answer ? "bg-white/10 pointer-events-none text-white" : "bg-white text-black"} block py-2 mt-2 mx-6 rounded-lg font-medium active:scale-[0.98] transition`}
+              className={`${
+                !answer?.answer
+                  ? "bg-white/10 pointer-events-none text-white"
+                  : "bg-white text-black"
+              } block py-2 mt-2 mx-6 rounded-lg font-medium active:scale-[0.98] transition`}
             >
               Confirm
             </button>

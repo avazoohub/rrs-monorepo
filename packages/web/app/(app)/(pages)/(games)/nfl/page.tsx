@@ -11,14 +11,16 @@ import { getDrafts } from "@/utils/queries/nfl";
 import { NFLDraft } from "@/data/nfl/draft";
 
 import { realtimeStore } from "@/store/realtimeStore";
+import { userStore } from "@/store/userStore";
 
 import Team from "./components/(main)/Team";
 import Panel from "./components/(modals)/Panel";
 import ProfileQuestions from "./components/(modals)/ProfileQuestions";
 
 export default function NFL() {
-  const { setUpdate } = realtimeStore((state: any) => state);
   const supabase = useSupabaseBrowser();
+  const { setUpdate } = realtimeStore((state: any) => state);
+  const { user } = userStore((state: any) => state);
 
   const [team, setTeam] = React.useState<any>(null);
   const [tab, setTab] = React.useState<number>(0);
@@ -35,7 +37,7 @@ export default function NFL() {
   );
 
   const { data: metas, refetch: refetchMetas } = useQuery(
-    getUserMeta(supabase),
+    getUserMeta(supabase, user?.id),
   );
 
   const isEnabled = (pick: number) => {
@@ -66,6 +68,10 @@ export default function NFL() {
   React.useEffect(() => {
     getPicks();
   }, []);
+
+  React.useEffect(() => {
+    getPicks();
+  }, [tab]);
 
   supabase
     .channel("answer_changes")
@@ -141,6 +147,7 @@ export default function NFL() {
                 count={index}
                 tab={tab}
                 espn={team}
+                getPicks={getPicks}
                 answers={answers}
               />
             );

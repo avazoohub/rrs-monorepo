@@ -7,13 +7,15 @@ import Image from "next/image";
 import { signIn } from "./action";
 import { useFormState, useFormStatus } from "react-dom";
 
-
 const SubmitButton = () => {
   const { pending } = useFormStatus();
 
   return (
-    <button aria-disabled={pending} className="text-white text-lg font-medium border border-[#4d4360] bg-transparent px-4 py-2 rounded-lg active:scale-[0.98]">
-      {pending ? 'Logging in...' : 'Login'}
+    <button
+      aria-disabled={pending}
+      className="text-white text-lg font-medium border border-[#4d4360] bg-transparent px-4 py-2 rounded-lg active:scale-[0.98]"
+    >
+      {pending ? "Logging in..." : "Login"}
     </button>
   );
 };
@@ -26,8 +28,8 @@ export default function Login() {
 
   return (
     <div className="flex items-center justify-between w-screen h-screen">
-      <div className=" w-full h-full md:w-7/12 flex items-center justify-center fixed md:static inset-0 z-10 p-6 md:p-0">
-        <div className="text-center w-full md:w-6/12 mx-auto p-6 rounded-lg">
+      <div className=" w-full h-full md:w-6/12 flex items-center justify-center fixed md:static inset-0 z-10 p-6">
+        <div className="text-center w-full mx-auto p-6 rounded-lg">
           <Link href="/">
             <Image
               src="/temp-logo.svg"
@@ -38,9 +40,7 @@ export default function Login() {
             />
           </Link>
           <h1 className="text-white text-4xl font-medium"> Welcome back </h1>
-          {state?.message && (
-            <span>{state.message}</span>
-          )}
+          {state?.message && <span>{state.message}</span>}
           <form action={formAction} className="flex flex-col space-y-2 mt-6">
             <input
               id="email"
@@ -61,19 +61,23 @@ export default function Login() {
             <SubmitButton />
           </form>
 
-          {/* <div className="flex flex-col mt-4">
-            <Link href="/forgotpassword">
+          <div className="flex flex-col mt-6">
+            {/* <Link href="/forgotpassword">
               Forgot Password
-            </Link>
+            </Link> */}
 
-            <Link href="/register">
+            <Link href="/register_nfl" className="font-light opacity-80">
               Create Account
             </Link>
-          </div> */}
+          </div>
         </div>
       </div>
       <div className="w-full h-full flex items-center justify-center opacity-5 md:opacity-100">
-        <img src="https://static.clubs.nfl.com/image/private/t_editorial_landscape_12_desktop/bears/ualngvr4ggbznypjaz6f" alt="" className="rounded-2xl w-screen md:w-[90%] h-screen md:h-[80%] object-cover" />
+        <img
+          src="https://static.clubs.nfl.com/image/private/t_editorial_landscape_12_desktop/bears/ualngvr4ggbznypjaz6f"
+          alt=""
+          className="rounded-2xl w-screen md:w-[90%] h-screen md:h-[80%] object-cover"
+        />
       </div>
     </div>
   );

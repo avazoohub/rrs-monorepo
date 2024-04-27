@@ -15,6 +15,7 @@ export default function Team({
   tab,
   espn,
   answers,
+  getPicks,
   setSelectedTeam,
 }: any) {
   const { update } = realtimeStore((state: any) => state);
@@ -60,7 +61,10 @@ export default function Team({
   const answerData =
     pick &&
     answers &&
-    answers.filter((answer: any) => answer.round.split("_")[2] === pick.teamId);
+    answers.filter(
+      (answer: any) =>
+        answer.round === `${pick.round}_${pick.pick}_${pick.teamId}`,
+    );
 
   const displayName =
     teamData && teamData[0]?.athlete
@@ -77,9 +81,11 @@ export default function Team({
       {pick && (
         <button
           onClick={() => handleTeamSelection(team[0]?.team.id)}
-          className={`grid grid-cols-5 md:grid-cols-6 items-center h-12 overflow-hidden bg-[#1a181f] rounded-lg ${!isEnabled(count + 1, pick.teamId) ? "opacity-40 pointer-events-none hover:cursor-not-allowed" : ""}`}
+          className={`grid grid-cols-5 md:grid-cols-6 items-center h-12 overflow-hidden bg-[#1a181f] rounded-lg ${!isEnabled(count + 1, pick.teamId) ? "pointer-events-none hover:cursor-not-allowed" : ""}`}
         >
-          <div className="col-span-3 flex items-center justify-even h-full truncate">
+          <div
+            className={`col-span-3 flex items-center justify-even h-full truncate ${!isEnabled(count + 1, pick.teamId) ? "opacity-60" : ""}`}
+          >
             <span
               className=" h-full w-10 bg-black flex items-center justify-center text-white rounded"
               style={{ backgroundColor: `#${team[0]?.team.color}` }}
@@ -97,7 +103,7 @@ export default function Team({
               </p>
             </div>
           </div>
-          <p className="font-light text-left opacity-60 col-span-2 lg:col-span-3 flex items-center truncate">
+          <p className="font-light text-left col-span-2 lg:col-span-3 flex items-center truncate">
             {imageUrl ? (
               <img
                 src={imageUrl}
