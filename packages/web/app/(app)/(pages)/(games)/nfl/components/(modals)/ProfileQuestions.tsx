@@ -37,6 +37,7 @@ export default function ProfileQuestions({ metas, refetchMetas }: any) {
           if (res.status === 201) {
             addUserPoints(user?.id, 22, "profile");
           }
+          console.log(res)
         })
         .catch((err) => {
           console.error(err);
@@ -54,14 +55,17 @@ export default function ProfileQuestions({ metas, refetchMetas }: any) {
     setAnswer({ questionNumber: 7 });
   }, []);
 
+  React.useEffect(() => {
+    setAnswers((prev) => ({ ...prev, [`profile_6`]: selectedTeam }));
+  }, [selectedTeam]);
+
   return (
     <>
       {metas && (
         <>
           <div
-            className={`fixed top-0 right-0 z-[10] w-screen h-screen flex items-center justify-center overflow-hidden transition ${
-              metas.length <= 0 ? "translate-y-0" : "translate-y-[100%]"
-            }`}
+            className={`fixed top-0 right-0 z-[10] w-screen h-screen flex items-center justify-center overflow-hidden transition ${metas.length <= 0 ? "translate-y-0" : "translate-y-[100%]"
+              }`}
           >
             <div className="relative z-2 bg-[#201d27] w-11/12 md:w-10/12 lg:w-[30rem] h-[75vh] flex flex-col justify-start overflow-y-auto rounded-lg p-8">
               <Link
@@ -86,6 +90,9 @@ export default function ProfileQuestions({ metas, refetchMetas }: any) {
                     type="hidden"
                     name="q_6"
                     value={selectedTeam}
+                    onChange={(e) =>
+                      handleInputChange(6, selectedTeam)
+                    }
                   />
                   <div className="bg-[#26232d] rounded-md px-2">
                     <PaginatedList
@@ -104,6 +111,9 @@ export default function ProfileQuestions({ metas, refetchMetas }: any) {
                     className="bg-[#2e2a36] p-2 rounded-lg text-white"
                     type="text"
                     name="q_7"
+                    onChange={(e) =>
+                      handleInputChange(7, e.target.value)
+                    }
                   />
                 </div>
                 <div className="flex flex-col space-y-1">
@@ -115,6 +125,9 @@ export default function ProfileQuestions({ metas, refetchMetas }: any) {
                     className="bg-[#2e2a36] p-2 rounded-lg text-white"
                     type="text"
                     name="q_8"
+                    onChange={(e) =>
+                      handleInputChange(8, e.target.value)
+                    }
                   />
                 </div>
                 <div className="flex flex-col space-y-1">
@@ -126,6 +139,9 @@ export default function ProfileQuestions({ metas, refetchMetas }: any) {
                     className="bg-[#2e2a36] p-2 rounded-lg text-white"
                     type="text"
                     name="q_9"
+                    onChange={(e) =>
+                      handleInputChange(9, e.target.value)
+                    }
                   />
                 </div>
                 <div className="flex flex-col space-y-1">
@@ -137,6 +153,9 @@ export default function ProfileQuestions({ metas, refetchMetas }: any) {
                     className="bg-[#2e2a36] p-2 rounded-lg text-white"
                     type="text"
                     name="q_10"
+                    onChange={(e) =>
+                      handleInputChange(10, e.target.value)
+                    }
                   />
                 </div>
                 <div className="flex flex-col space-y-1">
@@ -148,6 +167,9 @@ export default function ProfileQuestions({ metas, refetchMetas }: any) {
                     className="bg-[#2e2a36] p-2 rounded-lg text-white"
                     type="text"
                     name="q_11"
+                    onChange={(e) =>
+                      handleInputChange(11, e.target.value)
+                    }
                   />
                 </div>
                 <div className="flex flex-col space-y-1">
@@ -159,6 +181,9 @@ export default function ProfileQuestions({ metas, refetchMetas }: any) {
                     className="bg-[#2e2a36] p-2 rounded-lg text-white"
                     type="text"
                     name="q_12"
+                    onChange={(e) =>
+                      handleInputChange(12, e.target.value)
+                    }
                   />
                 </div>
                 <div className="flex flex-col space-y-1">
@@ -171,6 +196,10 @@ export default function ProfileQuestions({ metas, refetchMetas }: any) {
                     className="bg-[#2e2a36] p-2 rounded-lg text-white"
                     type="text"
                     name="q_13"
+
+                    onChange={(e) =>
+                      handleInputChange(13, e.target.value)
+                    }
                   />
                 </div>
                 <div className="flex flex-col space-y-1">
@@ -182,6 +211,9 @@ export default function ProfileQuestions({ metas, refetchMetas }: any) {
                     className="bg-[#2e2a36] p-2 rounded-lg text-white"
                     type="text"
                     name="q_14"
+                    onChange={(e) =>
+                      handleInputChange(14, e.target.value)
+                    }
                   />
                 </div>
                 <div className="flex flex-col space-y-1">
@@ -194,6 +226,9 @@ export default function ProfileQuestions({ metas, refetchMetas }: any) {
                     className="bg-[#2e2a36] p-2 rounded-lg text-white"
                     type="text"
                     name="q_15"
+                    onChange={(e) =>
+                      handleInputChange(15, e.target.value)
+                    }
                   />
                 </div>
                 <div className="flex flex-col space-y-1">
@@ -206,6 +241,9 @@ export default function ProfileQuestions({ metas, refetchMetas }: any) {
                     className="bg-[#2e2a36] p-2 rounded-lg text-white"
                     type="text"
                     name="q_16"
+                    onChange={(e) =>
+                      handleInputChange(16, e.target.value)
+                    }
                   />
                 </div>
               </div>
@@ -242,9 +280,8 @@ export default function ProfileQuestions({ metas, refetchMetas }: any) {
           </div>
 
           <div
-            className={`flex fixed inset-0 bg-black/60 items-start justify-end transition ${
-              metas.length <= 0 ? "z-[9] opacity-100" : "z-[-1] opacity-0"
-            }`}
+            className={`flex fixed inset-0 bg-black/60 items-start justify-end transition ${metas.length <= 0 ? "z-[9] opacity-100" : "z-[-1] opacity-0"
+              }`}
           ></div>
         </>
       )}
