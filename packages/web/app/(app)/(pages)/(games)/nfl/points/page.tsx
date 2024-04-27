@@ -21,6 +21,7 @@ export default function Points() {
     data: answers,
     error,
     isLoading,
+    refetch
   } = useQuery(getAnswers(supabase, user?.id));
 
   const getTeam = (teamId: string) => {
@@ -33,12 +34,18 @@ export default function Points() {
     metas && Array.isArray(metas) && setResults(calculateNFLResults(metas));
   }, [metas]);
 
+
+  React.useEffect(() => {
+    refetch
+  }, [user]);
+
   return (
     <div className="bg-[#110e19] rounded-2xl">
       <div className="border-b border-[#2d283c] mb-4 py-6">
         <div className="flex items-center justify-start space-x-4 px-6">
           <div>
             <h4 className="font-medium text-lg mb-8"> Your Points </h4>
+
             <div className="flex items-center space-x-10 mt-6 mb-2">
               {results &&
                 results.results &&

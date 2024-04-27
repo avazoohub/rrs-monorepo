@@ -2,6 +2,7 @@
 
 import React, { ChangeEvent } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { IoChevronBackOutline } from "react-icons/io5";
 
@@ -40,6 +41,7 @@ export default function AdminNFL({
   const pick = searchParams.get("pick");
 
   const supabase = useSupabaseBrowser();
+  const router = useRouter();
   const [status, setStatus] = React.useState<boolean>(false);
   const [formState, setFormState] = React.useState<FormState>(initialState);
 
@@ -98,6 +100,7 @@ export default function AdminNFL({
 
   const clearFields = () => {
     setFormState(initialState);
+    router.refresh();
   };
 
   return (

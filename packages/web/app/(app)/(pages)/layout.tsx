@@ -33,7 +33,7 @@ export default async function Layout({
                                 {children}
                             </div>
                             <div className="hidden lg:flex h-full  flex-col space-y-4 overflow-y-auto w-3/12 ">
-                                <UserTeam />
+                                {/* <UserTeam /> */}
                                 <Answers />
                                 <Points />
                             </div>

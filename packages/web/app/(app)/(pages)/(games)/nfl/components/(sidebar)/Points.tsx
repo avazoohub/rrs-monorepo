@@ -56,7 +56,6 @@ export default function Points() {
       (meta: { meta_key: string }) => meta.meta_key === answerKey,
     );
 
-    console.log(filteredData);
 
     if (!filteredData) {
       try {
