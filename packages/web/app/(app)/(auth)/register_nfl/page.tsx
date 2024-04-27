@@ -14,20 +14,7 @@ import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import en from "react-phone-number-input/locale/en";
 import "react-phone-number-input/style.css";
 
-const SubmitButton = () => {
-  const { pending } = useFormStatus();
-
-  return (
-    <button
-      aria-disabled={pending}
-      className="text-white text-lg font-medium border border-[#4d4360] bg-transparent px-4 py-2 rounded-lg active:scale-[0.98]"
-    >
-      {pending ? "Logging in..." : "Login"}
-    </button>
-  );
-};
-
-export default function Register() {
+export default function Register_NFL() {
   const initialState = { message: "" };
   const [state, formAction] = useFormState(signUp, initialState);
   const [phone, setPhone] = React.useState<any>("");
@@ -52,9 +39,8 @@ export default function Register() {
     return (
       <button
         aria-disabled={pending}
-        className={`${
-          (pending || submit) && "pointer-events-none grayscale opacity-20"
-        } text-white text-lg font-medium border border-[#4d4360] bg-transparent px-4 py-2 rounded-lg active:scale-[0.98] block w-full`}
+        className={`${(pending || submit) && "pointer-events-none grayscale opacity-20"
+          } text-white text-lg font-medium border border-[#4d4360] bg-transparent px-4 py-2 rounded-lg active:scale-[0.98] block w-full`}
       >
         {pending ? "Creating account.." : "Create Account"}
       </button>
@@ -75,8 +61,7 @@ export default function Register() {
             />
           </Link>
           <h1 className="text-white text-3xl font-medium">
-            {" "}
-            Create your account{" "}
+            Create your account
           </h1>
 
           {state?.message && (
@@ -86,8 +71,7 @@ export default function Register() {
           )}
 
           <p className="font-light mt-1 opacity-60">
-            {" "}
-            Please fill-in the form below.{" "}
+            Please fill-in the form below.
           </p>
 
           <form action={formAction} className="mt-4 overflow-auto">
